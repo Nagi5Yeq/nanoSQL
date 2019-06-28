@@ -16,12 +16,13 @@
 /* First, we deal with  platform-specific or compiler-specific issues. */
 
 /* begin standard C headers. */
-#include <stdio.h>
-#include <string.h>
-#include <errno.h>
-#include <stdlib.h>
-#include <time.h>
 #include <io.h>
+#include <time.h>
+#include <errno.h>
+#include <stdio.h>
+#include <stdint.h>
+#include <string.h>
+#include <stdlib.h>
 
 /* end standard C headers. */
 
@@ -1004,7 +1005,7 @@ case 28:
 	YY_RULE_SETUP
 	#line 61 "interpreter.lpp"
 	{
-		yylval.flVal = atoi(yytext);
+		yylval.flVal = (float)atoi(yytext);
 		int i,flag = 0;
 		float di = 10.0;
 		for (i = 0; i < strlen(yytext); i++)
@@ -1016,13 +1017,12 @@ case 28:
 			}
 			if (yytext[i] == '.') flag = 1;
 		}
-		//printf("fl=%f",yylval.flVal);
 		return fnum;
 	}
 		YY_BREAK
 	case 30:
 	YY_RULE_SETUP
-	#line 78 "interpreter.lpp"
+	#line 77 "interpreter.lpp"
 	{
 		yylval.strVal = (char *)malloc(strlen(yytext) * sizeof(char));
 		strcpy(yylval.strVal,yytext);
@@ -1031,7 +1031,7 @@ case 28:
 		YY_BREAK
 	case 31:
 	YY_RULE_SETUP
-	#line 84 "interpreter.lpp"
+	#line 83 "interpreter.lpp"
 	{
 		yylval.intVal = atoi(yytext);
 		return intnum;
@@ -1039,12 +1039,12 @@ case 28:
 		YY_BREAK
 	case 32:
 	YY_RULE_SETUP
-	#line 88 "interpreter.lpp"
+	#line 87 "interpreter.lpp"
 	{return yytext[0]; }
 		YY_BREAK
 	case 33:
 	YY_RULE_SETUP
-	#line 90 "interpreter.lpp"
+	#line 89 "interpreter.lpp"
 	{
 		std::string s = yytext,ss;
 		ss = s.substr(1,s.length() - 2);
@@ -1058,22 +1058,22 @@ case 28:
 	(yy_c_buf_p) = yy_cp -= 1;
 	YY_DO_BEFORE_ACTION; /* set up yytext again */
 	YY_RULE_SETUP
-	#line 97 "interpreter.lpp"
+	#line 96 "interpreter.lpp"
 	{
 		yyerror("Unterminated string");
 	}
 		YY_BREAK
 	case 35:
 	YY_RULE_SETUP
-	#line 101 "interpreter.lpp"
+	#line 100 "interpreter.lpp"
 	{printf("Invalid character!\n"); }
 		YY_BREAK
 	case 36:
 	YY_RULE_SETUP
-	#line 104 "interpreter.lpp"
+	#line 103 "interpreter.lpp"
 	ECHO;
 		YY_BREAK
-	#line 1076 "lex.yy.c"
+	#line 1075 "lex.yy.c"
 	case YY_STATE_EOF(INITIAL):
 		yyterminate();
 
@@ -1655,7 +1655,7 @@ static void yy_init_buffer(YY_BUFFER_STATE  b, FILE * file)
 		b->yy_bs_column = 0;
 	}
 
-	b->yy_is_interactive = file ? (_isatty(fileno(file)) > 0) : 0;
+	b->yy_is_interactive = file ? (isatty(fileno(file)) > 0) : 0;
 
 	errno = oerrno;
 }
@@ -2078,7 +2078,7 @@ void yyfree(void * ptr)
 
 #define YYTABLES_NAME "yytables"
 
-#line 104 "interpreter.lpp"
+#line 103 "interpreter.lpp"
 
 int yywrap(void)
 {

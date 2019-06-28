@@ -73,6 +73,7 @@ int Attribute::getKeyDataLength() {
 	default:
 		break;
 	}
+	return 0;
 }
 
 void Attribute::convertToRawData() {

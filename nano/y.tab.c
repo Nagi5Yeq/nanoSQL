@@ -1728,7 +1728,7 @@ yyreduce:
 		sql.condNum++;
 		sql.condCont[sql.condNum].attrName = tmpAttrName;
 		sql.condCont[sql.condNum].op = (yyvsp[-1].strVal);
-		sql.condCont[sql.condNum].attrValueFlo = (yyvsp[0].intVal);
+		sql.condCont[sql.condNum].attrValueFlo = (float)(yyvsp[0].intVal);
 		sql.condCont[sql.condNum].attrValueInt = (yyvsp[0].intVal);
 		sql.condCont[sql.condNum].attrType = "INT";
 	}

@@ -268,7 +268,7 @@ bool API::selectRecord(SQLcommand sql)
         for (auto itr: result) {
             table.printinfo(itr);
         }
-        printf("Total %lu records selected\n", result.size());
+        printf("Total %zu records selected\n", result.size());
     } else {
         vector<PageId> result = table.getAll();
         
@@ -348,7 +348,7 @@ bool API::selectRecord(SQLcommand sql)
         for (auto itr: result) {
             table.printinfo(itr);
         }
-        printf("Total %lu records selected", result.size());
+        printf("Total %zu records selected", result.size());
     }
     printf("Command running time: %f second\n", (double)(clock() - begin) / CLOCKS_PER_SEC);
     return 1;
@@ -522,7 +522,7 @@ bool API::deleteRecord(SQLcommand sql)
         }
     }
     
-    printf("%lu record deleted\n", result.size());
+    printf("%zu record deleted\n", result.size());
     printf("Command running time: %f second\n", (double)(clock() - begin) / CLOCKS_PER_SEC);
     
     return 1;

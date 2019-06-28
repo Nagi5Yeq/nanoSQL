@@ -66,6 +66,7 @@ int BPTreeKey::getKeyDataLength() {
 	default:
 		break;
 	}
+	return 0;
 }
 
 int BPTreeKey::compare(const BPTreeKey &key) {

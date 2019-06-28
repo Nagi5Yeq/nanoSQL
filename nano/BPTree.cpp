@@ -1,4 +1,4 @@
-#include "BPTree.hpp"
+﻿#include "BPTree.hpp"
 
 void BPTree::updateParent(BPTreeNode node) {
 	if (node.nodeType == BPTreeNodeType::BPTreeInternalNode) {
@@ -481,7 +481,7 @@ BPTreeKey BPTree::getMinKey(BPTreeNode node) {
 	if (node.nodeType == BPTreeNodeType::BPTreeLeafNode) {
 		return node.nodeEntries[1].key;
 	}
-	else if (node.nodeType == BPTreeNodeType::BPTreeInternalNode) {
+	else {
 		return getMinKey(getNodeAtPage(node.nodeEntries[0].pagePointer));
 	}
 	assert(false); // Error
