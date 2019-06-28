@@ -89,7 +89,7 @@ bool BPTreeNode::isEmpty() {
 }
 
 bool BPTreeNode::insertEntry(BPTreeEntry entry) {
-    assert(entry.key.type != BPTreeKeyType::UNDEFINED);
+    assert(entry.key.type != DataType::UNDEFINED);
     int insertPoint;
     for (insertPoint = 0; insertPoint < entryNumber; ++insertPoint)
         if (nodeEntries[insertPoint].key > entry.key) break;
@@ -140,7 +140,7 @@ int BPTreeNode::getNodeRawDataLength() {
 }
 
 PageId BPTreeNode::getPagePointerForKey(BPTreeKey key) {
-    assert(key.type != BPTreeKeyType::UNDEFINED);
+    assert(key.type != DataType::UNDEFINED);
     if (key < nodeEntries[1].key) return nodeEntries[0].pagePointer;
     else {
         for (int i = 1; i < entryNumber; i++)

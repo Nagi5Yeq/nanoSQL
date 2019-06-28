@@ -31,7 +31,7 @@ enum class BPTreeNodeType {
 struct BPTreeNodeHeader {
     int             entryNumber;
     int             keyDataLength;
-    BPTreeKeyType   keyType;
+    DataType   keyType;
     PageId   parentNodePagePointer;
     PageId   siblingNodePagePointer;
     BPTreeNodeType  nodeType;
@@ -43,7 +43,7 @@ public:
         nodeEntries            = new BPTreeEntry[1024];
         entryNumber            = 1; //第一个entry只会用指针部分
         keyDataLength          = 0;
-        keyType                = BPTreeKeyType::UNDEFINED;
+        keyType                = DataType::UNDEFINED;
         parentNodePagePointer  = UNDEFINEED_PAGE_NUM;
         siblingNodePagePointer = UNDEFINEED_PAGE_NUM;
         nodeType               = BPTreeNodeType::BPTreeUndefinedNode;
@@ -115,7 +115,7 @@ public:
     BPTreeEntry     *nodeEntries;
     int             entryNumber;
     int             keyDataLength;
-    BPTreeKeyType   keyType;
+    DataType   keyType;
     PageId   parentNodePagePointer;
     PageId   siblingNodePagePointer;
     Page            nodePage;

@@ -14,15 +14,9 @@
 #include <cstdlib>
 #include <cassert>
 #include <cmath>
+#include "Global.h"
 
 using namespace std;
-
-enum class AttributeType {
-	UNDEFINED,
-	CHAR,
-	FLOAT,
-	INT
-};
 
 class Attribute {
 public:
@@ -42,7 +36,7 @@ public:
 	bool operator <= (const Attribute &attr);
 	bool operator >= (const Attribute &attr);
 
-	AttributeType 	type;
+	DataType 	type;
 	int 			length;
 	int 			intdata;
 	float 			floatdata;

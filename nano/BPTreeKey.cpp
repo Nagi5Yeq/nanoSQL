@@ -13,7 +13,7 @@ BPTreeKey::BPTreeKey() {
     intData = 0;
     floatData = 0.0f;
     charData[0] = '\0';
-    type = BPTreeKeyType::UNDEFINED;
+    type = DataType::UNDEFINED;
 }
 
 BPTreeKey::BPTreeKey(const BPTreeKey &key) {
@@ -32,20 +32,20 @@ BPTreeKey::BPTreeKey(const Attribute &attri) {
     memcpy(charData, attri.chardata, keyLen);
     memcpy(rawData, attri.rawdata, 256);
     switch (attri.type) {
-        case AttributeType::INT :
-            type = BPTreeKeyType::INT;
+        case DataType::INT :
+            type = DataType::INT;
             break;
         
-        case AttributeType::FLOAT :
-            type = BPTreeKeyType::FLOAT;
+        case DataType::FLOAT :
+            type = DataType::FLOAT;
             break;
             
-        case AttributeType::CHAR :
-            type = BPTreeKeyType::CHAR;
+        case DataType::CHAR :
+            type = DataType::CHAR;
             break;
             
         default:
-            type = BPTreeKeyType::UNDEFINED;
+            type = DataType::UNDEFINED;
             break;
     }
 }
@@ -55,19 +55,19 @@ BPTreeKey::~BPTreeKey() {
 
 int BPTreeKey::getKeyDataLength() {
     switch (type) {
-        case BPTreeKeyType::CHAR:
+        case DataType::CHAR:
             return keyLen;
             break;
         
-        case BPTreeKeyType::FLOAT:
+        case DataType::FLOAT:
             return sizeof(float);
             break;
             
-        case BPTreeKeyType::INT:
+        case DataType::INT:
             return sizeof(int);
             break;
             
-        case BPTreeKeyType::UNDEFINED:
+        case DataType::UNDEFINED:
             return 0;
             break;
             
@@ -78,9 +78,9 @@ int BPTreeKey::getKeyDataLength() {
 
 int BPTreeKey::compare(const BPTreeKey &key) {
     assert(type == key.type);
-    assert(type != BPTreeKeyType::UNDEFINED);
+    assert(type != DataType::UNDEFINED);
     switch (type) {
-        case BPTreeKeyType::INT: {
+        case DataType::INT: {
             if (intData > key.intData)
                 return 1;
             else if (intData == key.intData)
@@ -89,7 +89,7 @@ int BPTreeKey::compare(const BPTreeKey &key) {
             break;
         }
         
-        case BPTreeKeyType::FLOAT: {
+        case DataType::FLOAT: {
             if (floatData > key.floatData)
                 return 1;
             else if ( fabs(floatData - key.floatData) < 0.000001)
@@ -98,7 +98,7 @@ int BPTreeKey::compare(const BPTreeKey &key) {
             break;
         }
             
-        case BPTreeKeyType::CHAR: {
+        case DataType::CHAR: {
             return strncmp(charData, key.charData, keyLen);
             break;
         }
@@ -110,22 +110,22 @@ int BPTreeKey::compare(const BPTreeKey &key) {
 }
 
 void BPTreeKey::convertToRawData() {
-//    assert(type != BPTreeKeyType::UNDEFINED); For leaf
+//    assert(type != DataType::UNDEFINED); For leaf
     
     switch (type) {
-        case BPTreeKeyType::INT: {
+        case DataType::INT: {
             keyLen = sizeof(int);
             memcpy(rawData, &intData, keyLen);
             break;
         }
             
-        case BPTreeKeyType::FLOAT: {
+        case DataType::FLOAT: {
             keyLen = sizeof(float);
             memcpy(rawData, &floatData, keyLen);
             break;
         }
             
-        case BPTreeKeyType::CHAR: {
+        case DataType::CHAR: {
             assert(keyLen >= 0);
             assert(keyLen <= 255);
             memcpy(rawData, charData, keyLen);
@@ -138,22 +138,22 @@ void BPTreeKey::convertToRawData() {
 }
 
 void BPTreeKey::parseFromRawData() {
-    assert(type != BPTreeKeyType::UNDEFINED);
+    assert(type != DataType::UNDEFINED);
     keyLen = getKeyDataLength();
     switch (type) {
-        case BPTreeKeyType::INT: {
+        case DataType::INT: {
             assert(keyLen == sizeof(int));
             memcpy(&intData, rawData, keyLen);
             break;
         }
             
-        case BPTreeKeyType::FLOAT: {
+        case DataType::FLOAT: {
             assert(keyLen == sizeof(float));
             memcpy(&floatData, rawData, keyLen);
             break;
         }
             
-        case BPTreeKeyType::CHAR: {
+        case DataType::CHAR: {
             assert(keyLen >= 0);
             assert(keyLen <= 255);
             memcpy(charData, rawData, keyLen);

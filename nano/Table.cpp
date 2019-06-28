@@ -325,17 +325,17 @@ void Table::printinfo(PageId index)
     {
         switch(tuple.list[i].type)
         {
-        case AttributeType::CHAR:
+        case DataType::CHAR:
             for (int j = 0; j < tuple.list[i].length; j++)
                 cout << tuple.list[i].chardata[j];
             break;
-        case AttributeType::FLOAT:
+        case DataType::FLOAT:
             printf("%.2f", tuple.list[i].floatdata);
             break;
-        case AttributeType::INT:
+        case DataType::INT:
             cout << tuple.list[i].intdata;
             break;
-        case AttributeType::UNDEFINED:;
+        case DataType::UNDEFINED:;
         default:
             cout << "Type error!" ;
             break;

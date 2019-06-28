@@ -36,7 +36,7 @@ bool API::insertRecord(SQLcommand sql)
     
     for (i=1; i<=sql.attrNum; i++)
     {
-        if (vec[i-1].type==AttributeType::CHAR)
+        if (vec[i-1].type==DataType::CHAR)
         {
             if (sql.condCont[i].attrType!="CHAR")
             {
@@ -53,7 +53,7 @@ bool API::insertRecord(SQLcommand sql)
             memcpy(vec[i - 1].chardata, sql.condCont[i].attrValueStr.c_str(), sql.condCont[i].attrValueStr.length());
         }
         else
-        if (vec[i-1].type==AttributeType::FLOAT)
+        if (vec[i-1].type==DataType::FLOAT)
         {
             if (sql.condCont[i].attrType=="CHAR")
             {
@@ -89,12 +89,12 @@ bool API::insertRecord(SQLcommand sql)
         if (catalog.attrUnique(sql.tableName, vec[i].attrName)) {
             if (catalog.indexNum(sql.tableName, vec[i].attrName) > 0) {
                 BPTree *indexTree;
-                if (vec[i].type == AttributeType::INT) {
-                    indexTree = new BPTree(sql.tableName, vec[i].attrName, BPTreeKeyType::INT, vec[i].length);
-                } else if (vec[i].type == AttributeType::FLOAT) {
-                    indexTree = new BPTree(sql.tableName, vec[i].attrName, BPTreeKeyType::FLOAT, vec[i].length);
+                if (vec[i].type == DataType::INT) {
+                    indexTree = new BPTree(sql.tableName, vec[i].attrName, DataType::INT, vec[i].length);
+                } else if (vec[i].type == DataType::FLOAT) {
+                    indexTree = new BPTree(sql.tableName, vec[i].attrName, DataType::FLOAT, vec[i].length);
                 } else {
-                    indexTree = new BPTree(sql.tableName, vec[i].attrName, BPTreeKeyType::CHAR, vec[i].length);
+                    indexTree = new BPTree(sql.tableName, vec[i].attrName, DataType::CHAR, vec[i].length);
                 }
                 if ((*indexTree).searchKeyForPagePointer(vec[i]) != UNDEFINEED_PAGE_NUM) {
                     printf("Conflict on attribute %s, this attribute should be unique!\n", vec[i].attrName.c_str());
@@ -117,12 +117,12 @@ bool API::insertRecord(SQLcommand sql)
     for (int i = 0; i < vec.size(); ++i) {
         if (catalog.indexNum(sql.tableName, vec[i].attrName) > 0) {
             BPTree *indexTree;
-            if (vec[i].type == AttributeType::INT) {
-                indexTree = new BPTree(sql.tableName, vec[i].attrName, BPTreeKeyType::INT, vec[i].length);
-            } else if (vec[i].type == AttributeType::FLOAT) {
-                indexTree = new BPTree(sql.tableName, vec[i].attrName, BPTreeKeyType::FLOAT, vec[i].length);
+            if (vec[i].type == DataType::INT) {
+                indexTree = new BPTree(sql.tableName, vec[i].attrName, DataType::INT, vec[i].length);
+            } else if (vec[i].type == DataType::FLOAT) {
+                indexTree = new BPTree(sql.tableName, vec[i].attrName, DataType::FLOAT, vec[i].length);
             } else {
-                indexTree = new BPTree(sql.tableName, vec[i].attrName, BPTreeKeyType::CHAR, vec[i].length);
+                indexTree = new BPTree(sql.tableName, vec[i].attrName, DataType::CHAR, vec[i].length);
             }
             (*indexTree).insertKeyPointerPair(vec[i], insertedPage);
             delete indexTree;
@@ -174,12 +174,12 @@ bool API::createIndex(SQLcommand sql)
             for (i = 0; i < vec.size(); ++i) {
                 if (vec[i].attrName == sql.attrName) break;
             }
-            if (vec[i].type == AttributeType::INT) {
-                indexTree = new BPTree(sql.tableName, vec[i].attrName, BPTreeKeyType::INT, vec[i].length);
-            } else if (vec[i].type == AttributeType::FLOAT) {
-                indexTree = new BPTree(sql.tableName, vec[i].attrName, BPTreeKeyType::FLOAT, vec[i].length);
+            if (vec[i].type == DataType::INT) {
+                indexTree = new BPTree(sql.tableName, vec[i].attrName, DataType::INT, vec[i].length);
+            } else if (vec[i].type == DataType::FLOAT) {
+                indexTree = new BPTree(sql.tableName, vec[i].attrName, DataType::FLOAT, vec[i].length);
             } else {
-                indexTree = new BPTree(sql.tableName, vec[i].attrName, BPTreeKeyType::CHAR, vec[i].length);
+                indexTree = new BPTree(sql.tableName, vec[i].attrName, DataType::CHAR, vec[i].length);
             }
             for (auto itr: table.getAll(i)) {
                 indexTree->insertKeyPointerPair(itr.first, itr.second);
@@ -227,22 +227,22 @@ bool API::selectRecord(SQLcommand sql)
             if (attribute.attrName == sql.condCont[i].attrName) {
                 exist = true;
                 if (sql.condCont[i].attrType == "INT") {
-                    if (attribute.type == AttributeType::CHAR) {
+                    if (attribute.type == DataType::CHAR) {
                         printf("In where clause, the argument provided for attribute %s doesn't match its type, select failed!\n", attribute.attrName.c_str());
                         return 0;
-                    } else if (attribute.type == AttributeType::INT) {
+                    } else if (attribute.type == DataType::INT) {
                         attribute.intdata = sql.condCont[i].attrValueInt;
-                    } else if (attribute.type == AttributeType::FLOAT) {
+                    } else if (attribute.type == DataType::FLOAT) {
                         attribute.floatdata = (float)sql.condCont[i].attrValueInt;
                     }
                 } else if (sql.condCont[i].attrType == "FLOAT") {
-                    if (attribute.type != AttributeType::FLOAT) {
+                    if (attribute.type != DataType::FLOAT) {
                         printf("In where clause, the argument provided for attribute %s doesn't match its type, select failed!\n", attribute.attrName.c_str());
                         return 0;
                     }
                     attribute.floatdata = sql.condCont[i].attrValueFlo;
                 } else if (sql.condCont[i].attrType == "CHAR") {
-                    if (attribute.type != AttributeType::CHAR) {
+                    if (attribute.type != DataType::CHAR) {
                         printf("In where clause, the argument provided for attribute %s doesn't match its type, select failed!\n", attribute.attrName.c_str());
                         return 0;
                     }
@@ -283,12 +283,12 @@ bool API::selectRecord(SQLcommand sql)
         for (int i = 0; i < conditionList.size(); ++i) {
             if ((relationList[i] == "=") && (cm.indexNum(sql.tableName, conditionList[i].attrName) > 0)) {
                 BPTree *indexTree;
-                if (conditionList[i].type == AttributeType::INT) {
-                    indexTree = new BPTree(sql.tableName, conditionList[i].attrName, BPTreeKeyType::INT, conditionList[i].length);
-                } else if (conditionList[i].type == AttributeType::FLOAT) {
-                    indexTree = new BPTree(sql.tableName, conditionList[i].attrName, BPTreeKeyType::FLOAT, conditionList[i].length);
+                if (conditionList[i].type == DataType::INT) {
+                    indexTree = new BPTree(sql.tableName, conditionList[i].attrName, DataType::INT, conditionList[i].length);
+                } else if (conditionList[i].type == DataType::FLOAT) {
+                    indexTree = new BPTree(sql.tableName, conditionList[i].attrName, DataType::FLOAT, conditionList[i].length);
                 } else {
-                    indexTree = new BPTree(sql.tableName, conditionList[i].attrName, BPTreeKeyType::CHAR, conditionList[i].length);
+                    indexTree = new BPTree(sql.tableName, conditionList[i].attrName, DataType::CHAR, conditionList[i].length);
                 }
                 auto searchResult = indexTree->searchKeyForPagePointer(conditionList[i]);
                 if (searchResult != UNDEFINEED_PAGE_NUM) {
@@ -311,12 +311,12 @@ bool API::selectRecord(SQLcommand sql)
             
             if ((relationList[i] == "=") && (cm.indexNum(sql.tableName, conditionList[i].attrName) > 0)) {
                 BPTree *indexTree;
-                if (conditionList[i].type == AttributeType::INT) {
-                    indexTree = new BPTree(sql.tableName, conditionList[i].attrName, BPTreeKeyType::INT, conditionList[i].length);
-                } else if (conditionList[i].type == AttributeType::FLOAT) {
-                    indexTree = new BPTree(sql.tableName, conditionList[i].attrName, BPTreeKeyType::FLOAT, conditionList[i].length);
+                if (conditionList[i].type == DataType::INT) {
+                    indexTree = new BPTree(sql.tableName, conditionList[i].attrName, DataType::INT, conditionList[i].length);
+                } else if (conditionList[i].type == DataType::FLOAT) {
+                    indexTree = new BPTree(sql.tableName, conditionList[i].attrName, DataType::FLOAT, conditionList[i].length);
                 } else {
-                    indexTree = new BPTree(sql.tableName, conditionList[i].attrName, BPTreeKeyType::CHAR, conditionList[i].length);
+                    indexTree = new BPTree(sql.tableName, conditionList[i].attrName, DataType::CHAR, conditionList[i].length);
                 }
                 auto searchResult = indexTree->searchKeyForPagePointer(conditionList[i]);
                 if (searchResult != UNDEFINEED_PAGE_NUM && find(result.begin(), result.end(), searchResult) != result.end())
@@ -386,22 +386,22 @@ bool API::deleteRecord(SQLcommand sql)
             if (Attribute.attrName == sql.condCont[i].attrName) {
                 exist = true;
                 if (sql.condCont[i].attrType == "INT") {
-                    if (Attribute.type == AttributeType::CHAR) {
+                    if (Attribute.type == DataType::CHAR) {
                         printf("In where clause, the argument provided for attribute %s doesn't match its type, delete failed!\n", Attribute.attrName.c_str());
                         return 0;
-                    } else if (Attribute.type == AttributeType::INT) {
+                    } else if (Attribute.type == DataType::INT) {
                         Attribute.intdata = sql.condCont[i].attrValueInt;
-                    } else if (Attribute.type == AttributeType::FLOAT) {
+                    } else if (Attribute.type == DataType::FLOAT) {
                         Attribute.floatdata = (float)sql.condCont[i].attrValueInt;
                     }
                 } else if (sql.condCont[i].attrType == "FLOAT") {
-                    if (Attribute.type != AttributeType::FLOAT) {
+                    if (Attribute.type != DataType::FLOAT) {
                         printf("In where clause, the argument provided for attribute %s doesn't match its type, delete failed!\n", Attribute.attrName.c_str());
                         return 0;
                     }
                     Attribute.floatdata = sql.condCont[i].attrValueFlo;
                 } else if (sql.condCont[i].attrType == "CHAR") {
-                    if (Attribute.type != AttributeType::CHAR) {
+                    if (Attribute.type != DataType::CHAR) {
                         printf("In where clause, the argument provided for attribute %s doesn't match its type, delete failed!\n", Attribute.attrName.c_str());
                         return 0;
                     }
@@ -430,12 +430,12 @@ bool API::deleteRecord(SQLcommand sql)
         for (int i = 0; i < conditionList.size(); ++i) {
             if ((relationList[i] == "=") && (cm.indexNum(sql.tableName, conditionList[i].attrName) > 0)) {
                 BPTree *indexTree;
-                if (conditionList[i].type == AttributeType::INT) {
-                    indexTree = new BPTree(sql.tableName, conditionList[i].attrName, BPTreeKeyType::INT, conditionList[i].length);
-                } else if (conditionList[i].type == AttributeType::FLOAT) {
-                    indexTree = new BPTree(sql.tableName, conditionList[i].attrName, BPTreeKeyType::FLOAT, conditionList[i].length);
+                if (conditionList[i].type == DataType::INT) {
+                    indexTree = new BPTree(sql.tableName, conditionList[i].attrName, DataType::INT, conditionList[i].length);
+                } else if (conditionList[i].type == DataType::FLOAT) {
+                    indexTree = new BPTree(sql.tableName, conditionList[i].attrName, DataType::FLOAT, conditionList[i].length);
                 } else {
-                    indexTree = new BPTree(sql.tableName, conditionList[i].attrName, BPTreeKeyType::CHAR, conditionList[i].length);
+                    indexTree = new BPTree(sql.tableName, conditionList[i].attrName, DataType::CHAR, conditionList[i].length);
                 }
                 auto searchResult = indexTree->searchKeyForPagePointer(conditionList[i]);
                 if (searchResult != UNDEFINEED_PAGE_NUM) {
@@ -458,12 +458,12 @@ bool API::deleteRecord(SQLcommand sql)
             
             if ((relationList[i] == "=") && (cm.indexNum(sql.tableName, conditionList[i].attrName) > 0)) {
                 BPTree *indexTree;
-                if (conditionList[i].type == AttributeType::INT) {
-                    indexTree = new BPTree(sql.tableName, conditionList[i].attrName, BPTreeKeyType::INT, conditionList[i].length);
-                } else if (conditionList[i].type == AttributeType::FLOAT) {
-                    indexTree = new BPTree(sql.tableName, conditionList[i].attrName, BPTreeKeyType::FLOAT, conditionList[i].length);
+                if (conditionList[i].type == DataType::INT) {
+                    indexTree = new BPTree(sql.tableName, conditionList[i].attrName, DataType::INT, conditionList[i].length);
+                } else if (conditionList[i].type == DataType::FLOAT) {
+                    indexTree = new BPTree(sql.tableName, conditionList[i].attrName, DataType::FLOAT, conditionList[i].length);
                 } else {
-                    indexTree = new BPTree(sql.tableName, conditionList[i].attrName, BPTreeKeyType::CHAR, conditionList[i].length);
+                    indexTree = new BPTree(sql.tableName, conditionList[i].attrName, DataType::CHAR, conditionList[i].length);
                 }
                 auto searchResult = indexTree->searchKeyForPagePointer(conditionList[i]);
                 if (searchResult != UNDEFINEED_PAGE_NUM && find(result.begin(), result.end(), searchResult) != result.end())
@@ -510,12 +510,12 @@ bool API::deleteRecord(SQLcommand sql)
                     if (tableInfo[attributeIndex].attrName == attribute.attrName) break;
                 
                 BPTree *indexTree = nullptr;
-                if (attribute.type == AttributeType::INT) {
-                    indexTree = new BPTree(sql.tableName, attribute.attrName, BPTreeKeyType::INT, attribute.length);
-                } else if (attribute.type == AttributeType::FLOAT) {
-                    indexTree = new BPTree(sql.tableName, attribute.attrName, BPTreeKeyType::FLOAT, attribute.length);
-                } else if (attribute.type == AttributeType::CHAR){
-                    indexTree = new BPTree(sql.tableName, attribute.attrName, BPTreeKeyType::CHAR, attribute.length);
+                if (attribute.type == DataType::INT) {
+                    indexTree = new BPTree(sql.tableName, attribute.attrName, DataType::INT, attribute.length);
+                } else if (attribute.type == DataType::FLOAT) {
+                    indexTree = new BPTree(sql.tableName, attribute.attrName, DataType::FLOAT, attribute.length);
+                } else if (attribute.type == DataType::CHAR){
+                    indexTree = new BPTree(sql.tableName, attribute.attrName, DataType::CHAR, attribute.length);
                 }
                 
                 for (auto itr: result) {

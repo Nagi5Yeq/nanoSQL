@@ -13,7 +13,7 @@ Attribute::Attribute() {
 	intdata = 0;
 	floatdata = 0.0f;
 	chardata[0] = '\0';
-	type = AttributeType::UNDEFINED;
+	type = DataType::UNDEFINED;
 }
 
 Attribute::Attribute(const Attribute &attr) {
@@ -33,10 +33,10 @@ Attribute::~Attribute() {
 
 int Attribute::compare (const Attribute &attr) {
 	assert(type == attr.type);
-	assert(type != AttributeType::UNDEFINED);
+	assert(type != DataType::UNDEFINED);
 
 	switch (type) {
-		case AttributeType::INT: {
+		case DataType::INT: {
 			if (intdata > attr.intdata)
 				return 1;
 			else if (intdata == attr.intdata)
@@ -45,7 +45,7 @@ int Attribute::compare (const Attribute &attr) {
 				return -1;
 			break;
 		}
-		case AttributeType::FLOAT: {
+		case DataType::FLOAT: {
 			if (floatdata > attr.floatdata)
 				return 1;
 			else if ( fabs(floatdata - attr.floatdata) < 0.000001)
@@ -54,7 +54,7 @@ int Attribute::compare (const Attribute &attr) {
 				return -1;
 			break;
 		}
-		case AttributeType::CHAR: {
+		case DataType::CHAR: {
 			return strncmp(chardata, attr.chardata, length);
 			break;
 		}
@@ -66,16 +66,16 @@ int Attribute::compare (const Attribute &attr) {
 
 int Attribute::getKeyDataLength() {
 	switch (type) {
-		case AttributeType::CHAR:
+		case DataType::CHAR:
 			return length;
 			break;
-		case AttributeType::INT:
+		case DataType::INT:
 			return sizeof(int);
 			break;
-		case AttributeType::FLOAT:
+		case DataType::FLOAT:
 			return sizeof(float);
 			break;
-		case AttributeType::UNDEFINED:
+		case DataType::UNDEFINED:
 			return 0;
 			break;
 		default:
@@ -85,17 +85,17 @@ int Attribute::getKeyDataLength() {
 
 void Attribute::convertToRawData() {
 	switch (type) {
-		case AttributeType::INT: {
+		case DataType::INT: {
 			length = sizeof(int);
 			memcpy(rawdata, &intdata, length);
 			break;
 		}
-		case AttributeType::FLOAT: {
+		case DataType::FLOAT: {
 			length = sizeof(float);
 			memcpy(rawdata, &floatdata, length);
 			break;
 		}
-		case AttributeType::CHAR: {
+		case DataType::CHAR: {
 			assert(length >= 0);
 			assert(length <= 255);
 			memcpy(rawdata, chardata, length);
@@ -108,21 +108,21 @@ void Attribute::convertToRawData() {
 }
 
 void Attribute::parseFromRawData() {
-	assert(type != AttributeType::UNDEFINED);
+	assert(type != DataType::UNDEFINED);
 	length = getKeyDataLength();
 
 	switch (type) {
-		case AttributeType::INT: {
+		case DataType::INT: {
 			assert(length == sizeof(int));
 			memcpy(&intdata, rawdata, length);
 			break;
 		}
-		case AttributeType::FLOAT: {
+		case DataType::FLOAT: {
 			assert(length == sizeof(float));
 			memcpy(&floatdata, rawdata,length);
 			break;
 		}
-		case AttributeType::CHAR: {
+		case DataType::CHAR: {
 			assert(length >= 0);
 			assert(length <= 255);
 			memcpy(chardata, rawdata, length);

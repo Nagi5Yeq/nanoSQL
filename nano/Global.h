@@ -11,6 +11,13 @@
 
 #include "assert.h"
 
+enum class DataType {
+	UNDEFINED,
+	INT,
+	FLOAT,
+	CHAR
+};
+
 typedef int PageId;
 const int MAXPATHDEEPTH = 100;
 const int PAGESIZE = 4096 * sizeof(char);

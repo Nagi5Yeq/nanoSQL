@@ -21,7 +21,7 @@ using namespace std;
 
 class BPTree {
 public:
-    BPTree(string tableName, string attributeName, BPTreeKeyType keyType, int keyDataLength) {
+    BPTree(string tableName, string attributeName, DataType keyType, int keyDataLength) {
         assert(tableName != "");
         assert(attributeName != "");
         this->tableName = tableName;
@@ -75,7 +75,7 @@ public:
     
     string              tableName;
     string              attributeName;
-    BPTreeKeyType       keyType;
+    DataType       keyType;
     int                 keyDataLength;
 };
 

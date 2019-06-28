@@ -32,7 +32,7 @@ void Tuple::convertToRawData()
 		list[i].convertToRawData();
 		memcpy(cursor, list[i].rawdata, list[i].getKeyDataLength());
 		cursor += list[i].getKeyDataLength();
-		assert(list[i].type != AttributeType::UNDEFINED);
+		assert(list[i].type != DataType::UNDEFINED);
 	}
 }
 
@@ -47,6 +47,6 @@ void Tuple::ParseFromRawData()
 		memcpy(list[i].rawdata, cursor, list[i].getKeyDataLength());
 		cursor += list[i].getKeyDataLength();
 		list[i].parseFromRawData();
-		assert(list[i].type != AttributeType::UNDEFINED);
+		assert(list[i].type != DataType::UNDEFINED);
 	}
 }

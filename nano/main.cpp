@@ -67,24 +67,24 @@ using namespace std;
 //
 //void testDelete() {
 //    srand(time(0));
-//    BPTree tree("test2", "test2", BPTreeKeyType::INT, 4);
+//    BPTree tree("test2", "test2", DataType::INT, 4);
 //    BPTreeKey key;
 //    key.keyLen = 4;
-//    key.type = BPTreeKeyType::INT;
+//    key.type = DataType::INT;
 //    map<int, bool> used;
 //    for (int i = 0; i < 1000000; i++) {
 //        while (used[key.intData])
 //            key.intData = rand() % 100000000;
 //        used[key.intData] = true;
 //        saver[i] = key.intData;
-//    key.type = BPTreeKeyType::INT;
+//    key.type = DataType::INT;
 //        tree.insertKeyPointerPair(key, i);
 //    }
 ////    printTree(tree, tree.getNodeAtPage(ROOTPAGE), 1);
 //    cout<<endl<<endl<<endl;
 //    for (int i = 0; i < 1000000; i++) {
 //        key.intData = saver[i];
-//    key.type = BPTreeKeyType::INT;
+//    key.type = DataType::INT;
 //        tree.deleteKey(key);
 ////        cout << "deleting " << saver[i] << endl;
 ////    printTree(tree, tree.getNodeAtPage(ROOTPAGE), 1);
@@ -94,10 +94,10 @@ using namespace std;
 //}
 //
 //void testBPTree() {
-//    BPTree tree("test", "test", BPTreeKeyType::CHAR, 20);
+//    BPTree tree("test", "test", DataType::CHAR, 20);
 //    BPTreeKey key;
 //    key.keyLen = 20;
-//    key.type = BPTreeKeyType::CHAR;
+//    key.type = DataType::CHAR;
 //    BPTreeNode node = tree.getNodeAtPage(ROOTPAGE);
 ////    for (int i = 1; i < node.entryNumber; i++) {
 ////        cout << node.nodeEntries[i].key.floatData << endl;
@@ -147,7 +147,7 @@ using namespace std;
 //
 //void testKey() {
 //    BPTreeKey key1;
-//    key1.type = BPTreeKeyType::CHAR;
+//    key1.type = DataType::CHAR;
 //    key1.keyLen = 20;
 //    BPTreeKey key2;
 //    key2 = key1;
@@ -158,10 +158,10 @@ using namespace std;
 //}
 //
 //void play3488() {
-//    BPTree tree("test2", "test2", BPTreeKeyType::INT, 4);
+//    BPTree tree("test2", "test2", DataType::INT, 4);
 //    BPTreeKey key;
 //    key.keyLen = 4;
-//    key.type = BPTreeKeyType::INT;
+//    key.type = DataType::INT;
 //    key.intData = 34888;
 //    cout << tree.searchKeyForPagePointer(key) << endl;
 //    tree.deleteKey(key);
@@ -211,10 +211,10 @@ int main(int argc, const char * argv[]) {
 
     Table table1("student");
     Attribute attr1;
-    attr1.type = AttributeType::INT;
+    attr1.type = DataType::INT;
     attr1.length = 4;
     Attribute attr2;
-    attr2.type = AttributeType::CHAR;
+    attr2.type = DataType::CHAR;
     attr2.length = 10;
     vector<Attribute> v;
     for(int i = 1; i <= 1000; i++)

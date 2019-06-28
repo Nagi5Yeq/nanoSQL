@@ -38,7 +38,7 @@ void CatalogManager::insertTable(TableInfo table)
                 printf("Failed to create table %s. Attributes with the same name have been found.\n",table.tableName.c_str());
                 return;
             }
-    
+#if 0
     if (table.primaryKey=="")
         table.primaryKeyLoc=-1;
     else
@@ -50,6 +50,14 @@ void CatalogManager::insertTable(TableInfo table)
                 table.attrUnique[i]='Y';
             }
     }
+#endif
+	table.primaryKeyLoc = -1;
+	for (i = 0; i < table.attrNum; i++) {
+		if (table.attrName[i] == table.primaryKey) {
+			table.primaryKeyLoc = i;
+			table.attrUnique[i] = 'Y';
+		}
+	}
 
     page.tableName = table.tableName;
     page.pageData[0] = (char)table.attrNum;
@@ -65,11 +73,19 @@ void CatalogManager::insertTable(TableInfo table)
     
     buffer.writePage(page);
     printf("Created table %s successfully!\n",table.tableName.c_str());
+#if 0
     if (table.primaryKeyLoc>=0)
     {
         printf("Trying to build index on primary key automatelly...\n");
         insertIndex(table.tableName, table.attrName[table.primaryKeyLoc], table.tableName+table.attrName[table.primaryKeyLoc]);
     }
+#endif
+	for (i = 0; i < table.attrNum; i++) {
+		if (table.attrUnique[i] == 'Y') {
+			printf("Trying to build index on primary key or unique key automatelly...\n");
+			insertIndex(table.tableName, table.attrName[i], table.tableName + table.attrName[i]);
+		}
+	}
 }
 
 void CatalogManager::dropTable(string tableName)
@@ -447,18 +463,18 @@ vector<Attribute> CatalogManager::tableInformation(string tableName)
         j=attrType(tableName, attr.attrName);
         if (j==1)
         {
-            attr.type = AttributeType::INT;
+            attr.type = DataType::INT;
             attr.length = sizeof(int);
         }
         else
         if (j==2)
         {
-            attr.type = AttributeType::FLOAT;
+            attr.type = DataType::FLOAT;
             attr.length = sizeof(float);
         }
         else
         {
-            attr.type = AttributeType::CHAR;
+            attr.type = DataType::CHAR;
             attr.length = j-2;
         }
         
