@@ -34,7 +34,7 @@ Table::~Table()
 	bm.writePage(page);
 }
 
-PageIndexType Table::insertTuple(vector<Attribute> list)
+PageId Table::insertTuple(vector<Attribute> list)
 {
 	Tuple tuple;
     tuple.list = list;
@@ -58,15 +58,15 @@ PageIndexType Table::insertTuple(vector<Attribute> list)
 	return tuple.page.pageIndex;
 }
 
-void Table::deleteTuple(PageIndexType index)
+void Table::deleteTuple(PageId index)
 {
 	RecordPage page;
 	page.pageIndex = index;
 	page.tableName = TableName;
 	bm.readPage(page);
 
-	PageIndexType next = page.readnext();
-	PageIndexType before = page.readbefore();
+	PageId next = page.readnext();
+	PageId before = page.readbefore();
     if (before == 1) {
         head = next;
     }
@@ -101,10 +101,10 @@ void Table::deleteTuple(PageIndexType index)
 
 }
 
-vector<PageIndexType> Table::scanEqual(int attrnum, Attribute attribute)
+vector<PageId> Table::scanEqual(int attrnum, Attribute attribute)
 {
-	vector<PageIndexType> result;
-	PageIndexType i = head;
+	vector<PageId> result;
+	PageId i = head;
 
 	while(i != UNDEFINEED_PAGE_NUM)
 	{
@@ -127,10 +127,10 @@ vector<PageIndexType> Table::scanEqual(int attrnum, Attribute attribute)
 	return result;
 }
 
-vector<PageIndexType> Table::scanNotEqual(int attrnum, Attribute attribute)
+vector<PageId> Table::scanNotEqual(int attrnum, Attribute attribute)
 {
-	vector<PageIndexType> result;
-	PageIndexType i = head;
+	vector<PageId> result;
+	PageId i = head;
 
 	while (i != UNDEFINEED_PAGE_NUM)
 	{
@@ -153,10 +153,10 @@ vector<PageIndexType> Table::scanNotEqual(int attrnum, Attribute attribute)
 	return result;
 }
 
-vector<PageIndexType> Table::scanLess(int attrnum, Attribute attribute)
+vector<PageId> Table::scanLess(int attrnum, Attribute attribute)
 {
-	vector<PageIndexType> result;
-	PageIndexType i = head;
+	vector<PageId> result;
+	PageId i = head;
 	while(i != UNDEFINEED_PAGE_NUM)
 	{
 		RecordPage page;
@@ -177,10 +177,10 @@ vector<PageIndexType> Table::scanLess(int attrnum, Attribute attribute)
 	return result;
 }
 
-vector<PageIndexType> Table::scanGreater(int attrnum, Attribute attribute)
+vector<PageId> Table::scanGreater(int attrnum, Attribute attribute)
 {
-	vector<PageIndexType> result;
-	PageIndexType i = head;
+	vector<PageId> result;
+	PageId i = head;
 	while(i != UNDEFINEED_PAGE_NUM)
 	{
 		RecordPage page;
@@ -201,10 +201,10 @@ vector<PageIndexType> Table::scanGreater(int attrnum, Attribute attribute)
 	return result;
 }
 
-vector<PageIndexType> Table::scanLessEqual(int attrnum, Attribute attribute)
+vector<PageId> Table::scanLessEqual(int attrnum, Attribute attribute)
 {
-	vector<PageIndexType> result;
-	PageIndexType i = head;
+	vector<PageId> result;
+	PageId i = head;
 	while(i != UNDEFINEED_PAGE_NUM)
 	{
 
@@ -226,10 +226,10 @@ vector<PageIndexType> Table::scanLessEqual(int attrnum, Attribute attribute)
 	return result;
 }
 
-vector<PageIndexType> Table::scanGreaterEqual(int attrnum, Attribute attribute)
+vector<PageId> Table::scanGreaterEqual(int attrnum, Attribute attribute)
 {
-	vector<PageIndexType> result;
-	PageIndexType i = head;
+	vector<PageId> result;
+	PageId i = head;
 	while(i != UNDEFINEED_PAGE_NUM)
 	{
 		RecordPage page;
@@ -250,10 +250,10 @@ vector<PageIndexType> Table::scanGreaterEqual(int attrnum, Attribute attribute)
 	return result;
 }
 
-vector<PageIndexType> Table::getAll()
+vector<PageId> Table::getAll()
 {
-	vector<PageIndexType> result;
-	PageIndexType i = head;
+	vector<PageId> result;
+	PageId i = head;
 	while (i != UNDEFINEED_PAGE_NUM)
 	{
 		result.push_back(i);
@@ -268,10 +268,10 @@ vector<PageIndexType> Table::getAll()
 	return result;
 }
 
-vector<pair<Attribute, PageIndexType>> Table::getAll(int attrnum)
+vector<pair<Attribute, PageId>> Table::getAll(int attrnum)
 {
-	vector<pair<Attribute, PageIndexType>> result;
-	PageIndexType i = head;
+	vector<pair<Attribute, PageId>> result;
+	PageId i = head;
 	while(i != UNDEFINEED_PAGE_NUM)
 	{
 		RecordPage page;
@@ -283,7 +283,7 @@ vector<pair<Attribute, PageIndexType>> Table::getAll(int attrnum)
 		tuple.page = page;
 		tuple.createlist(TableName);
 		tuple.ParseFromRawData();
-		pair<Attribute, PageIndexType> p;
+		pair<Attribute, PageId> p;
 		p.first = tuple.list[attrnum];
 		p.second = i;
 		result.push_back(p);
@@ -294,7 +294,7 @@ vector<pair<Attribute, PageIndexType>> Table::getAll(int attrnum)
 	return result;
 }
 
-vector<Attribute> Table::getTupleAtPage(PageIndexType num)
+vector<Attribute> Table::getTupleAtPage(PageId num)
 {
 	RecordPage page;
 	page.tableName = TableName;
@@ -309,7 +309,7 @@ vector<Attribute> Table::getTupleAtPage(PageIndexType num)
 	return tuple.list;
 }
 
-void Table::printinfo(PageIndexType index)
+void Table::printinfo(PageId index)
 {
     RecordPage page;
     page.pageIndex = index;

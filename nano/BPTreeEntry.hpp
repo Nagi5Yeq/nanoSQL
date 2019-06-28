@@ -29,7 +29,7 @@ public:
     int getEntryDataLength();
     
     BPTreeKey       key;
-    PageIndexType   pagePointer;
+    PageId   pagePointer;
 };
 
 #endif /* BPTreeEntry_hpp */

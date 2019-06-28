@@ -21,10 +21,10 @@ public:
     RecordPage(){pageType = PageType::RecordPage;}
     ~RecordPage(){};
 	
-	void writenext(PageIndexType);
-	void writebefore(PageIndexType);
-	PageIndexType readnext();
-	PageIndexType readbefore();
+	void writenext(PageId);
+	void writebefore(PageId);
+	PageId readnext();
+	PageId readbefore();
 
 };
 

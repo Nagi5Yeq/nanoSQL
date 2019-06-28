@@ -112,7 +112,7 @@ bool API::insertRecord(SQLcommand sql)
     }
     
     
-    PageIndexType insertedPage = table.insertTuple(vec);
+    PageId insertedPage = table.insertTuple(vec);
     
     for (int i = 0; i < vec.size(); ++i) {
         if (catalog.indexNum(sql.tableName, vec[i].attrName) > 0) {
@@ -278,7 +278,7 @@ bool API::selectRecord(SQLcommand sql)
         }
         printf("Total %lu records selected\n", result.size());
     } else {
-        vector<PageIndexType> result = table.getAll();
+        vector<PageId> result = table.getAll();
         
         for (int i = 0; i < conditionList.size(); ++i) {
             if ((relationList[i] == "=") && (cm.indexNum(sql.tableName, conditionList[i].attrName) > 0)) {
@@ -301,7 +301,7 @@ bool API::selectRecord(SQLcommand sql)
         }
         
         for (int i = 0; i < conditionList.size(); ++i) {
-            vector<PageIndexType> nextResult;
+            vector<PageId> nextResult;
             nextResult.clear();
             
             auto tableInfo = cm.tableInformation(sql.tableName);
@@ -424,7 +424,7 @@ bool API::deleteRecord(SQLcommand sql)
     
     Table table(sql.tableName);
     
-    vector<PageIndexType> result = table.getAll();
+    vector<PageId> result = table.getAll();
     
     if (sql.condNum != 0) {
         for (int i = 0; i < conditionList.size(); ++i) {
@@ -448,7 +448,7 @@ bool API::deleteRecord(SQLcommand sql)
         }
         
         for (int i = 0; i < conditionList.size(); ++i) {
-            vector<PageIndexType> nextResult;
+            vector<PageId> nextResult;
             nextResult.clear();
             
             auto tableInfo = cm.tableInformation(sql.tableName);

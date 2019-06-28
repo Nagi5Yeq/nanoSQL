@@ -53,7 +53,7 @@ public:
     string          tableName;
     string          attributeName;
     PageType        pageType;
-    PageIndexType   pageIndex;
+    PageId   pageIndex;
     FILE*           fileHandle;
     char            pageData[PAGESIZE];
 };

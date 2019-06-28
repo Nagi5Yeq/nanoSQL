@@ -25,7 +25,7 @@ void Tuple::convertToRawData()
 {
 	assert(page.pageType != PageType::UndefinedPage);
 	char *cursor = page.pageData;
-	cursor += 2 * sizeof(PageIndexType);
+	cursor += 2 * sizeof(PageId);
 
 	for(unsigned int i = 0; i < list.size(); i++)
 	{
@@ -40,7 +40,7 @@ void Tuple::ParseFromRawData()
 {
 	assert(page.pageType != PageType::UndefinedPage);
 	char *cursor = page.pageData;
-	cursor += 2 * sizeof(PageIndexType);
+	cursor += 2 * sizeof(PageId);
 
 	for(unsigned int i = 0; i < list.size(); i++)
 	{

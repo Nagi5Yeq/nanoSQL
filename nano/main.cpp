@@ -106,7 +106,7 @@ using namespace std;
 ////    }
 //    printTree(tree, tree.getNodeAtPage(ROOTPAGE),1);
 ////    cout << tree.getLeadingPage() << endl;
-//    PageIndexType leading = tree.getLeadingPage();
+//    PageId leading = tree.getLeadingPage();
 //
 //    for (;leading != UNDEFINEED_PAGE_NUM; leading = tree.getNodeAtPage(leading).siblingNodePagePointer) {
 //        cout << leading << endl;
@@ -233,7 +233,7 @@ int main(int argc, const char * argv[]) {
     }
 
 
-    vector<PageIndexType> v1;
+    vector<PageId> v1;
     v1 = table1.scanLessEqual(0,attr1);
 
     for(unsigned int i = 0; i < v1.size(); i++)

@@ -32,8 +32,8 @@ struct BPTreeNodeHeader {
     int             entryNumber;
     int             keyDataLength;
     BPTreeKeyType   keyType;
-    PageIndexType   parentNodePagePointer;
-    PageIndexType   siblingNodePagePointer;
+    PageId   parentNodePagePointer;
+    PageId   siblingNodePagePointer;
     BPTreeNodeType  nodeType;
 };
 
@@ -110,14 +110,14 @@ public:
 
     int             getNodeRawDataLength();
     
-    PageIndexType   getPagePointerForKey(BPTreeKey key);
+    PageId   getPagePointerForKey(BPTreeKey key);
 
     BPTreeEntry     *nodeEntries;
     int             entryNumber;
     int             keyDataLength;
     BPTreeKeyType   keyType;
-    PageIndexType   parentNodePagePointer;
-    PageIndexType   siblingNodePagePointer;
+    PageId   parentNodePagePointer;
+    PageId   siblingNodePagePointer;
     Page            nodePage;
     BPTreeNodeType  nodeType;
 };

@@ -351,7 +351,7 @@ bool BufferManager::deleteIndexCatalogFile(string tableName, string attributeNam
     return remove(filePath.c_str()) != -1;
 }
 
-PageIndexType BufferManager::tableFileTotalPages(string tableName)
+PageId BufferManager::tableFileTotalPages(string tableName)
 { //返回表文件的总页数
     Page page;
     page.tableName = tableName;
@@ -361,7 +361,7 @@ PageIndexType BufferManager::tableFileTotalPages(string tableName)
     return ftell(page.fileHandle) / PAGESIZE;
 }
 
-PageIndexType BufferManager::indexFileTotalPages(string tableName, string attributeName)
+PageId BufferManager::indexFileTotalPages(string tableName, string attributeName)
 { //返回索引文件的总页数
     Page page;
     page.tableName = tableName;
@@ -372,7 +372,7 @@ PageIndexType BufferManager::indexFileTotalPages(string tableName, string attrib
     return ftell(page.fileHandle) / PAGESIZE;
 }
 
-PageIndexType BufferManager::tableCatalogFileTotalPages(string tableName)
+PageId BufferManager::tableCatalogFileTotalPages(string tableName)
 { //返回表目录文件的总页数
     Page page;
     page.tableName = tableName;
@@ -382,7 +382,7 @@ PageIndexType BufferManager::tableCatalogFileTotalPages(string tableName)
     return ftell(page.fileHandle) / PAGESIZE;
 }
 
-PageIndexType BufferManager::indexCatalogFileTotalPages(string tableName, string attributeName)
+PageId BufferManager::indexCatalogFileTotalPages(string tableName, string attributeName)
 { //返回索引目录文件的总页数
     Page page;
     page.tableName = tableName;
@@ -500,7 +500,7 @@ bool BufferManager::allocatePage(Page &page)
     fseek(page.fileHandle, 0, SEEK_SET);
     fread(pageBuffer, sizeof(char), PAGESIZE, page.fileHandle);
 
-    PageIndexType pageIndex = *((PageIndexType *)pageBuffer);
+    PageId pageIndex = *((PageId *)pageBuffer);
     if (pageIndex != 0)
     {
         fseek(page.fileHandle, pageIndex * PAGESIZE, SEEK_SET);
@@ -532,7 +532,7 @@ bool BufferManager::deallocatePage(Page &page)
     fseek(page.fileHandle, page.pageIndex * PAGESIZE, SEEK_SET);
     fwrite(pageBuffer, sizeof(char), PAGESIZE, page.fileHandle);
 
-    PageIndexType *pageIndex = (PageIndexType *)pageBuffer;
+    PageId *pageIndex = (PageId *)pageBuffer;
     *pageIndex = page.pageIndex;
 
     fseek(page.fileHandle, 0, SEEK_SET);

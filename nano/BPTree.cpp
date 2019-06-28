@@ -76,11 +76,11 @@ bool BPTree::deleteNode(BPTreeNode &node) {
     return bufferManager.deallocatePage(node.nodePage);
 }
 
-PageIndexType BPTree::getLeadingPage() {
+PageId BPTree::getLeadingPage() {
     return getLeadingPageAtNode(getNodeAtPage(ROOTPAGE));
 }
 
-PageIndexType BPTree::getLeadingPageAtNode(BPTreeNode node) {
+PageId BPTree::getLeadingPageAtNode(BPTreeNode node) {
     assert(node.nodeType != BPTreeNodeType::BPTreeUndefinedNode);
     assert(!node.isEmpty());
     if (node.nodeType == BPTreeNodeType::BPTreeLeafNode) {
@@ -90,7 +90,7 @@ PageIndexType BPTree::getLeadingPageAtNode(BPTreeNode node) {
     }
 }
 
-BPTreeNode BPTree::getNodeAtPage(PageIndexType pageIndex) {
+BPTreeNode BPTree::getNodeAtPage(PageId pageIndex) {
     BPTreeNode node;
     node.nodePage.tableName     = tableName;
     node.nodePage.attributeName = attributeName;
@@ -100,7 +100,7 @@ BPTreeNode BPTree::getNodeAtPage(PageIndexType pageIndex) {
     return node;
 }
 
-bool BPTree::insertKeyPointerPair(BPTreeKey key, PageIndexType pagePointer) {
+bool BPTree::insertKeyPointerPair(BPTreeKey key, PageId pagePointer) {
     assert(key.type == keyType);
     assert(pagePointer != UNDEFINEED_PAGE_NUM);
     assert(key.keyLen == keyDataLength);
@@ -249,10 +249,10 @@ bool BPTree::deleteKeyInNode(BPTreeKey key, BPTreeNode node) {
     return false;
 }
 
-bool BPTree::handelUnderflowInChildNodeOfNodePage(BPTreeNode node, PageIndexType childPage) {
+bool BPTree::handelUnderflowInChildNodeOfNodePage(BPTreeNode node, PageId childPage) {
     assert(!node.isEmpty());
     assert(node.entryNumber >= 2);
-    PageIndexType siblingPage;
+    PageId siblingPage;
     if (childPage == node.nodeEntries[node.entryNumber - 1].pagePointer) {
         siblingPage = childPage;
         childPage = node.nodeEntries[node.entryNumber - 2].pagePointer;
@@ -416,13 +416,13 @@ bool BPTree::handelUnderflowInChildNodeOfNodePage(BPTreeNode node, PageIndexType
     return false;
 }
 
-PageIndexType BPTree::searchKeyForPagePointer(BPTreeKey key) {
+PageId BPTree::searchKeyForPagePointer(BPTreeKey key) {
     assert(key.type == keyType);
     assert(key.keyLen == keyDataLength);
     return searchKeyForPagePointerInNode(key, getNodeAtPage(ROOTPAGE));
 }
 
-PageIndexType BPTree::searchKeyForPagePointerInNode(BPTreeKey key, BPTreeNode node) {
+PageId BPTree::searchKeyForPagePointerInNode(BPTreeKey key, BPTreeNode node) {
     assert(key.keyLen == node.keyDataLength);
     assert(key.type == node.keyType);
     if (node.nodeType == BPTreeNodeType::BPTreeLeafNode) {

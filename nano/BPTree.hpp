@@ -49,24 +49,24 @@ public:
     BPTreeNode          createNode();
     bool                deleteNode(BPTreeNode &node);
     
-    PageIndexType       getLeadingPage();
-    PageIndexType       getLeadingPageAtNode(BPTreeNode node);
+    PageId       getLeadingPage();
+    PageId       getLeadingPageAtNode(BPTreeNode node);
     
-    BPTreeNode          getNodeAtPage(PageIndexType pageIndex);
+    BPTreeNode          getNodeAtPage(PageId pageIndex);
     
     void                updateParent(BPTreeNode node);
     
-    bool                insertKeyPointerPair(BPTreeKey key, PageIndexType pagePointer);
+    bool                insertKeyPointerPair(BPTreeKey key, PageId pagePointer);
     bool                insertEntryIntoNode(BPTreeEntry entry, BPTreeNode node);
     bool                updateEntryIntoNode(BPTreeEntry entry, BPTreeNode node);
     
     bool                deleteKey(BPTreeKey key);
     bool                deleteKeyInNode(BPTreeKey key, BPTreeNode node);
-    bool                handelUnderflowInChildNodeOfNodePage(BPTreeNode node, PageIndexType childPage);
+    bool                handelUnderflowInChildNodeOfNodePage(BPTreeNode node, PageId childPage);
     
     
-    PageIndexType       searchKeyForPagePointer(BPTreeKey key);
-    PageIndexType       searchKeyForPagePointerInNode(BPTreeKey key, BPTreeNode node);
+    PageId       searchKeyForPagePointer(BPTreeKey key);
+    PageId       searchKeyForPagePointerInNode(BPTreeKey key, BPTreeNode node);
     
     bool                isRoot(BPTreeNode node);
     

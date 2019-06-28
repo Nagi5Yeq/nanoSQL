@@ -8,26 +8,26 @@
 
 #include "RecordPage.hpp"
 
-void RecordPage::writenext(PageIndexType next)
+void RecordPage::writenext(PageId next)
 {
-	memcpy(pageData, &next, sizeof(PageIndexType));
+	memcpy(pageData, &next, sizeof(PageId));
 }
 
-void RecordPage::writebefore(PageIndexType before)
+void RecordPage::writebefore(PageId before)
 {
-	memcpy(pageData + sizeof(PageIndexType), &before, sizeof(PageIndexType));
+	memcpy(pageData + sizeof(PageId), &before, sizeof(PageId));
 }
 
-PageIndexType RecordPage::readnext()
+PageId RecordPage::readnext()
 {
-	PageIndexType next;
-	memcpy(&next, pageData, sizeof(PageIndexType));
+	PageId next;
+	memcpy(&next, pageData, sizeof(PageId));
 	return next;
 }
 
-PageIndexType RecordPage::readbefore()
+PageId RecordPage::readbefore()
 {
-	PageIndexType before;
-	memcpy(&before, pageData + sizeof(PageIndexType), sizeof(PageIndexType));
+	PageId before;
+	memcpy(&before, pageData + sizeof(PageId), sizeof(PageId));
 	return before;
 }

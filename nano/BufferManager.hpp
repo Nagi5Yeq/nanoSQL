@@ -79,10 +79,10 @@ public:
 	bool deleteTableCatalogFile(string tableName);
 	bool deleteIndexCatalogFile(string tableName, string attributeName);
 
-	PageIndexType tableFileTotalPages(string tableName);
-	PageIndexType indexFileTotalPages(string tableName, string attributeName);
-	PageIndexType tableCatalogFileTotalPages(string tableName);
-	PageIndexType indexCatalogFileTotalPages(string tableName, string attributeName);
+	PageId tableFileTotalPages(string tableName);
+	PageId indexFileTotalPages(string tableName, string attributeName);
+	PageId tableCatalogFileTotalPages(string tableName);
+	PageId indexCatalogFileTotalPages(string tableName, string attributeName);
 
 	inline string tableFilePath(string tableName);
 	inline string indexFilePath(string tableName, string attributeName);

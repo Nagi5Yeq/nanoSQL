@@ -35,8 +35,8 @@ void BPTreeNode::convertToRawData() {
         nodeEntries[i].key.convertToRawData();
         memcpy(cursor, nodeEntries[i].key.rawData, nodeEntries[i].key.getKeyDataLength());
         cursor += nodeEntries[i].key.getKeyDataLength();
-        memcpy(cursor, &nodeEntries[i].pagePointer, sizeof(PageIndexType));
-        cursor += sizeof(PageIndexType);
+        memcpy(cursor, &nodeEntries[i].pagePointer, sizeof(PageId));
+        cursor += sizeof(PageId);
     }
 }
 
@@ -59,8 +59,8 @@ void BPTreeNode::parseFromRawData() {
         memcpy(nodeEntries[i].key.rawData, cursor, nodeEntries[i].getEntryDataLength());
         nodeEntries[i].key.parseFromRawData();
         cursor += nodeEntries[i].key.getKeyDataLength();
-        memcpy(&nodeEntries[i].pagePointer, cursor, sizeof(PageIndexType));
-        cursor += sizeof(PageIndexType);
+        memcpy(&nodeEntries[i].pagePointer, cursor, sizeof(PageId));
+        cursor += sizeof(PageId);
     }
 }
 
@@ -139,7 +139,7 @@ int BPTreeNode::getNodeRawDataLength() {
     return accumulator;
 }
 
-PageIndexType BPTreeNode::getPagePointerForKey(BPTreeKey key) {
+PageId BPTreeNode::getPagePointerForKey(BPTreeKey key) {
     assert(key.type != BPTreeKeyType::UNDEFINED);
     if (key < nodeEntries[1].key) return nodeEntries[0].pagePointer;
     else {
