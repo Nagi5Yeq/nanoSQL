@@ -58,27 +58,28 @@ enum yytokentype
 	WHERE = 268,
 	CREATE = 269,
 	RESET = 270,
-	INTO = 271,
-	VALUES = 272,
-	ON = 273,
-	PRIMARY = 274,
-	KEY = 275,
-	INTT = 276,
-	CHART = 277,
-	FLOATT = 278,
-	ANND = 279,
-	UNEXPECTED = 280,
-	WHITESPACE = 281,
-	FEOF = 282,
-	ERR = 283,
-	STRING = 284,
-	FILENAME = 285,
-	identifier = 286,
-	intnum = 287,
-	fnum = 288,
-	LE = 289,
-	GE = 290,
-	NE = 291
+	COMMENT = 271,
+	INTO = 272,
+	VALUES = 273,
+	ON = 274,
+	PRIMARY = 275,
+	KEY = 276,
+	INTT = 277,
+	CHART = 278,
+	FLOATT = 279,
+	ANND = 280,
+	UNEXPECTED = 281,
+	WHITESPACE = 282,
+	FEOF = 283,
+	ERR = 284,
+	STRING = 285,
+	FILENAME = 286,
+	identifier = 287,
+	intnum = 288,
+	fnum = 289,
+	LE = 290,
+	GE = 291,
+	NE = 292
 };
 #endif
 /* Tokens.  */
@@ -95,27 +96,28 @@ enum yytokentype
 #define WHERE 268
 #define CREATE 269
 #define RESET 270
-#define INTO 271
-#define VALUES 272
-#define ON 273
-#define PRIMARY 274
-#define KEY 275
-#define INTT 276
-#define CHART 277
-#define FLOATT 278
-#define ANND 279
-#define UNEXPECTED 280
-#define WHITESPACE 281
-#define FEOF 282
-#define ERR 283
-#define STRING 284
-#define FILENAME 285
-#define identifier 286
-#define intnum 287
-#define fnum 288
-#define LE 289
-#define GE 290
-#define NE 291
+#define COMMENT 271
+#define INTO 272
+#define VALUES 273
+#define ON 274
+#define PRIMARY 275
+#define KEY 276
+#define INTT 277
+#define CHART 278
+#define FLOATT 279
+#define ANND 280
+#define UNEXPECTED 281
+#define WHITESPACE 282
+#define FEOF 283
+#define ERR 284
+#define STRING 285
+#define FILENAME 286
+#define identifier 287
+#define intnum 288
+#define fnum 289
+#define LE 290
+#define GE 291
+#define NE 292
 
 /* Value type.  */
 #if ! defined YYSTYPE && ! defined YYSTYPE_IS_DECLARED
@@ -125,7 +127,7 @@ union YYSTYPE
 #line 30 "interpreter.ypp" /* yacc.c:1909  */
 	char *strVal; char *id; int intVal; float flVal; char *condition;
 
-#line 129 "y.tab.h" /* yacc.c:1909  */
+#line 131 "y.tab.h" /* yacc.c:1909  */
 };
 
 typedef union YYSTYPE YYSTYPE;

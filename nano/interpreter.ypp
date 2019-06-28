@@ -170,6 +170,7 @@ line	: create_table ';'	{
         yyin=fp;
     }
 }
+| line COMMENT
 ;
 
 

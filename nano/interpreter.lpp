@@ -51,6 +51,8 @@ identifier  {nondigit}({nondigit}|{digit})*
 ">="	{return GE;}
 "<>"	{return NE;}
 
+"--"[^\n]*  {return COMMENT;}
+
 [<>=]	{return yytext[0];}
 [ \t]+	{;}
 {identifier}	{yylval.id=yytext;return identifier;}

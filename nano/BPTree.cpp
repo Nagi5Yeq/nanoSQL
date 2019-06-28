@@ -469,10 +469,9 @@ BPTreeKey BPTree::getMaxKey(BPTreeNode node) {
 	if (node.nodeType == BPTreeNodeType::BPTreeLeafNode) {
 		return node.nodeEntries[node.entryNumber - 1].key;
 	}
-	else if (node.nodeType == BPTreeNodeType::BPTreeInternalNode) {
+	else {
 		return getMaxKey(getNodeAtPage(node.nodeEntries[node.entryNumber - 1].pagePointer));
 	}
-	assert(false); // Error
 }
 
 BPTreeKey BPTree::getMinKey(BPTreeNode node) {
@@ -484,5 +483,4 @@ BPTreeKey BPTree::getMinKey(BPTreeNode node) {
 	else {
 		return getMinKey(getNodeAtPage(node.nodeEntries[0].pagePointer));
 	}
-	assert(false); // Error
 }
