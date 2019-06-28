@@ -1,12 +1,4 @@
-﻿//
-//  Attribute.hpp
-//  MiniSQL
-//
-//  Created by jerry on 03/11/15.
-//  Copyright © 2015 Fan Wu. All rights reserved.
-//
-
-#ifndef Attribute_hpp
+﻿#ifndef Attribute_hpp
 #define Attribute_hpp
 
 #include <iostream>
@@ -24,10 +16,10 @@ public:
 	Attribute(const Attribute &attr);
 	~Attribute();
 
-	int compare (const Attribute &attr);
+	int compare(const Attribute &attr);
 	int getKeyDataLength();
 	void convertToRawData();
-    void parseFromRawData();
+	void parseFromRawData();
 
 	bool operator <  (const Attribute &attr);
 	bool operator == (const Attribute &attr);
@@ -42,7 +34,7 @@ public:
 	float 			floatdata;
 	char 			chardata[256];
 	char 			rawdata[256];
-    string          attrName;
+	string          attrName;
 };
 
 #endif /* Attribute_hpp */

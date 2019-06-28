@@ -1,11 +1,3 @@
-//
-//  Tuple.hpp
-//  MiniSQL
-//
-//  Created by jerry on 03/11/15.
-//  Copyright © 2015 Fan Wu. All rights reserved.
-//
-
 #ifndef Tuple_hpp
 #define Tuple_hpp
 
@@ -21,12 +13,12 @@
 
 using namespace std;
 
-class Tuple{
+class Tuple {
 public:
-	Tuple()  {}
+	Tuple() {}
 	~Tuple() {}
 
-    void createlist(string);
+	void createlist(string);
 	void createPage(string);
 	void convertToRawData();
 	void ParseFromRawData();

@@ -1,17 +1,9 @@
-﻿//
-//  Tuple.cpp
-//  MiniSQL
-//
-//  Created by jerry on 03/11/15.
-//  Copyright © 2015 Fan Wu. All rights reserved.
-//
-
-#include "Tuple.hpp"
+﻿#include "Tuple.hpp"
 
 void Tuple::createlist(string TableName)
 {
-    CatalogManager cm;
-    list = cm.tableInformation(TableName);
+	CatalogManager cm;
+	list = cm.tableInformation(TableName);
 }
 
 void Tuple::createPage(string TableName)
@@ -27,7 +19,7 @@ void Tuple::convertToRawData()
 	char *cursor = page.pageData;
 	cursor += 2 * sizeof(PageId);
 
-	for(unsigned int i = 0; i < list.size(); i++)
+	for (unsigned int i = 0; i < list.size(); i++)
 	{
 		list[i].convertToRawData();
 		memcpy(cursor, list[i].rawdata, list[i].getKeyDataLength());
@@ -42,7 +34,7 @@ void Tuple::ParseFromRawData()
 	char *cursor = page.pageData;
 	cursor += 2 * sizeof(PageId);
 
-	for(unsigned int i = 0; i < list.size(); i++)
+	for (unsigned int i = 0; i < list.size(); i++)
 	{
 		memcpy(list[i].rawdata, cursor, list[i].getKeyDataLength());
 		cursor += list[i].getKeyDataLength();

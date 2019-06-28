@@ -1,11 +1,3 @@
-//
-//  BPTreeKey.hpp
-//  MiniSQL
-//
-//  Created by fan wu on 10/25/15.
-//  Copyright © 2015 Fan Wu. All rights reserved.
-//
-
 #ifndef BPTreeKey_hpp
 #define BPTreeKey_hpp
 
@@ -23,27 +15,27 @@ static const int MAXCHARLENGTH = 256;
 
 class BPTreeKey {
 public:
-    BPTreeKey();
-    BPTreeKey(const BPTreeKey &key);
-    BPTreeKey(const Attribute &attri);
-    ~BPTreeKey();
-    
-    int compare(const BPTreeKey &key);
-    int getKeyDataLength();
-    void convertToRawData();
-    void parseFromRawData();
-    
-    bool operator<  (const BPTreeKey &key);
-    bool operator== (const BPTreeKey &key);
-    bool operator>  (const BPTreeKey &key);
-    bool operator>= (const BPTreeKey &key);
-    
-    DataType   type;
-    char            charData[256];
-    char            rawData[256];
-    int             intData;
-    float           floatData;
-    int             keyLen;
+	BPTreeKey();
+	BPTreeKey(const BPTreeKey &key);
+	BPTreeKey(const Attribute &attri);
+	~BPTreeKey();
+
+	int compare(const BPTreeKey &key);
+	int getKeyDataLength();
+	void convertToRawData();
+	void parseFromRawData();
+
+	bool operator<  (const BPTreeKey &key);
+	bool operator== (const BPTreeKey &key);
+	bool operator>  (const BPTreeKey &key);
+	bool operator>= (const BPTreeKey &key);
+
+	DataType   type;
+	char            charData[256];
+	char            rawData[256];
+	int             intData;
+	float           floatData;
+	int             keyLen;
 };
 
 #endif /* BPTreeKey_hpp */

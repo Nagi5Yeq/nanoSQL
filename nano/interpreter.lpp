@@ -1,5 +1,5 @@
 %{
-    
+    #include<time.h>
     extern "C"{
         int yywrap(void);
         int yylex(void);
@@ -74,16 +74,12 @@ identifier  {nondigit}({nondigit}|{digit})*
     //printf("fl=%f",yylval.flVal);
     return fnum;
 }
+
 [-]?{digit}+ {
     yylval.intVal=atoi(yytext);
     return intnum;
 }
 [-+*/;(),.\\]	{return yytext[0];}
-{letter}+"."{letter}+ {
-    yylval.strVal=(char *)malloc(strlen(yytext)*sizeof(char));
-    strcpy(yylval.strVal,yytext);
-    return FILENAME;
-}
 
 '((\\')|[^'\n])*' {
     std::string s = yytext,ss;

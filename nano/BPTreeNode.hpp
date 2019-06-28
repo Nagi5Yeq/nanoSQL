@@ -1,12 +1,4 @@
-﻿//
-//  BPTreeNode.hpp
-//  MiniSQL
-//
-//  Created by fan wu on 10/26/15.
-//  Copyright © 2015 Fan Wu. All rights reserved.
-//
-
-#ifndef BPTreeNode_hpp
+﻿#ifndef BPTreeNode_hpp
 #define BPTreeNode_hpp
 
 #include <iostream>
@@ -23,103 +15,103 @@
 using namespace std;
 
 enum class BPTreeNodeType {
-    BPTreeUndefinedNode = 0,
-    BPTreeInternalNode,
-    BPTreeLeafNode
+	BPTreeUndefinedNode = 0,
+	BPTreeInternalNode,
+	BPTreeLeafNode
 };
 
 struct BPTreeNodeHeader {
-    int             entryNumber;
-    int             keyDataLength;
-    DataType   keyType;
-    PageId   parentNodePagePointer;
-    PageId   siblingNodePagePointer;
-    BPTreeNodeType  nodeType;
+	int             entryNumber;
+	int             keyDataLength;
+	DataType   keyType;
+	PageId   parentNodePagePointer;
+	PageId   siblingNodePagePointer;
+	BPTreeNodeType  nodeType;
 };
 
 class BPTreeNode {
 public:
-    explicit BPTreeNode() {
-        nodeEntries            = new BPTreeEntry[1024];
-        entryNumber            = 1; //第一个entry只会用指针部分
-        keyDataLength          = 0;
-        keyType                = DataType::UNDEFINED;
-        parentNodePagePointer  = UNDEFINEED_PAGE_NUM;
-        siblingNodePagePointer = UNDEFINEED_PAGE_NUM;
-        nodeType               = BPTreeNodeType::BPTreeUndefinedNode;
-    }
+	explicit BPTreeNode() {
+		nodeEntries = new BPTreeEntry[1024];
+		entryNumber = 1; //第一个entry只会用指针部分
+		keyDataLength = 0;
+		keyType = DataType::UNDEFINED;
+		parentNodePagePointer = UNDEFINEED_PAGE_NUM;
+		siblingNodePagePointer = UNDEFINEED_PAGE_NUM;
+		nodeType = BPTreeNodeType::BPTreeUndefinedNode;
+	}
 
-    BPTreeNode(const BPTreeNode &node) {
-        nodeEntries            = new BPTreeEntry[1024];
-        entryNumber            = node.entryNumber;
-        keyDataLength          = node.keyDataLength;
-        keyType                = node.keyType;
-        parentNodePagePointer  = node.parentNodePagePointer;
-        siblingNodePagePointer = node.siblingNodePagePointer;
-        nodePage               = node.nodePage;
-        nodeType               = node.nodeType;
-        for (int i = 0; i < entryNumber; ++i)
-            nodeEntries[i] = node.nodeEntries[i];
-    }
-    ~BPTreeNode() {
-        if (nodeEntries != NULL) delete [] nodeEntries;
-        nodeEntries = NULL;
-    }
-    
-    BPTreeNode& operator=(const BPTreeNode &node) {
-        entryNumber            = node.entryNumber;
-        keyDataLength          = node.keyDataLength;
-        keyType                = node.keyType;
-        parentNodePagePointer  = node.parentNodePagePointer;
-        siblingNodePagePointer = node.siblingNodePagePointer;
-        nodePage               = node.nodePage;
-        nodeType               = node.nodeType;
-        for (int i = 0; i < entryNumber; ++i)
-            nodeEntries[i] = node.nodeEntries[i];
-        return *this;
-    }
-    
+	BPTreeNode(const BPTreeNode &node) {
+		nodeEntries = new BPTreeEntry[1024];
+		entryNumber = node.entryNumber;
+		keyDataLength = node.keyDataLength;
+		keyType = node.keyType;
+		parentNodePagePointer = node.parentNodePagePointer;
+		siblingNodePagePointer = node.siblingNodePagePointer;
+		nodePage = node.nodePage;
+		nodeType = node.nodeType;
+		for (int i = 0; i < entryNumber; ++i)
+			nodeEntries[i] = node.nodeEntries[i];
+	}
+	~BPTreeNode() {
+		if (nodeEntries != NULL) delete[] nodeEntries;
+		nodeEntries = NULL;
+	}
 
-    void            readNodeRawData();
-    void            writeNodeRawData();
+	BPTreeNode& operator=(const BPTreeNode &node) {
+		entryNumber = node.entryNumber;
+		keyDataLength = node.keyDataLength;
+		keyType = node.keyType;
+		parentNodePagePointer = node.parentNodePagePointer;
+		siblingNodePagePointer = node.siblingNodePagePointer;
+		nodePage = node.nodePage;
+		nodeType = node.nodeType;
+		for (int i = 0; i < entryNumber; ++i)
+			nodeEntries[i] = node.nodeEntries[i];
+		return *this;
+	}
 
-    void            convertToRawData();
-    void            parseFromRawData();
-    
-    void            readNode() {
-        readNodeRawData();
-        parseFromRawData();
-    }
-    void            writeNode() {
-        convertToRawData();
-        writeNodeRawData();
-    }
-    
-    void            clearNode();
 
-    bool            isOverflow();
-    bool            isUnderflow();
-    bool            isLeaf();
-    bool            isEmpty();
+	void readNodeRawData();
+	void writeNodeRawData();
 
-    bool            insertEntry(BPTreeEntry entry);
-    bool            deleteEntry(BPTreeKey key);
+	void convertToRawData();
+	void parseFromRawData();
 
-    bool            insertEntryAtIndex(BPTreeEntry entry, int index);
-    bool            deleteEntryAtIndex(int index);
+	void readNode() {
+		readNodeRawData();
+		parseFromRawData();
+	}
+	void writeNode() {
+		convertToRawData();
+		writeNodeRawData();
+	}
 
-    int             getNodeRawDataLength();
-    
-    PageId   getPagePointerForKey(BPTreeKey key);
+	void clearNode();
 
-    BPTreeEntry     *nodeEntries;
-    int             entryNumber;
-    int             keyDataLength;
-    DataType   keyType;
-    PageId   parentNodePagePointer;
-    PageId   siblingNodePagePointer;
-    Page            nodePage;
-    BPTreeNodeType  nodeType;
+	bool isOverflow();
+	bool isUnderflow();
+	bool isLeaf();
+	bool isEmpty();
+
+	bool insertEntry(BPTreeEntry entry);
+	bool deleteEntry(BPTreeKey key);
+
+	bool insertEntryAtIndex(BPTreeEntry entry, int index);
+	bool deleteEntryAtIndex(int index);
+
+	int getNodeRawDataLength();
+
+	PageId   getPagePointerForKey(BPTreeKey key);
+
+	BPTreeEntry *nodeEntries;
+	int entryNumber;
+	int keyDataLength;
+	DataType keyType;
+	PageId parentNodePagePointer;
+	PageId siblingNodePagePointer;
+	Page nodePage;
+	BPTreeNodeType  nodeType;
 };
 
 #endif /* BPTreeNode_hpp */

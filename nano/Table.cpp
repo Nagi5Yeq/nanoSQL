@@ -1,12 +1,4 @@
-﻿//
-//  Table.cpp
-//  MiniSQL
-//
-//  Created by jerry on 03/11/15.
-//  Copyright © 2015 Fan Wu. All rights reserved.
-//
-
-#include "Table.hpp"
+﻿#include "Table.hpp"
 
 BufferManager  bm;
 
@@ -18,8 +10,8 @@ Table::Table(string name)
 	page.tableName = name;
 	bm.readPage(page);
 	head = page.readnext();
-	if(head == 0)
-        head = UNDEFINEED_PAGE_NUM;
+	if (head == 0)
+		head = UNDEFINEED_PAGE_NUM;
 
 
 }
@@ -37,19 +29,19 @@ Table::~Table()
 PageId Table::insertTuple(vector<Attribute> list)
 {
 	Tuple tuple;
-    tuple.list = list;
+	tuple.list = list;
 	tuple.createPage(TableName);
 
 	tuple.page.writebefore(1);
 	tuple.page.writenext(head);
-	if(head != UNDEFINEED_PAGE_NUM)
+	if (head != UNDEFINEED_PAGE_NUM)
 	{
 		RecordPage page;
 		page.pageIndex = head;
 		page.tableName = TableName;
 		bm.readPage(page);
 		page.writebefore(tuple.page.pageIndex);
-        bm.writePage(page);
+		bm.writePage(page);
 	}
 	head = tuple.page.pageIndex;
 	tuple.convertToRawData();
@@ -67,10 +59,10 @@ void Table::deleteTuple(PageId index)
 
 	PageId next = page.readnext();
 	PageId before = page.readbefore();
-    if (before == 1) {
-        head = next;
-    }
-	if(next == UNDEFINEED_PAGE_NUM)
+	if (before == 1) {
+		head = next;
+	}
+	if (next == UNDEFINEED_PAGE_NUM)
 	{
 		RecordPage beforepage;
 		beforepage.pageIndex = before;
@@ -106,7 +98,7 @@ vector<PageId> Table::scanEqual(int attrnum, Attribute attribute)
 	vector<PageId> result;
 	PageId i = head;
 
-	while(i != UNDEFINEED_PAGE_NUM)
+	while (i != UNDEFINEED_PAGE_NUM)
 	{
 		RecordPage page;
 		page.tableName = TableName;
@@ -118,7 +110,7 @@ vector<PageId> Table::scanEqual(int attrnum, Attribute attribute)
 		tuple.createlist(TableName);
 		tuple.ParseFromRawData();
 
-		if(tuple.list[attrnum] == attribute)
+		if (tuple.list[attrnum] == attribute)
 			result.push_back(i);
 
 		i = page.readnext();
@@ -157,7 +149,7 @@ vector<PageId> Table::scanLess(int attrnum, Attribute attribute)
 {
 	vector<PageId> result;
 	PageId i = head;
-	while(i != UNDEFINEED_PAGE_NUM)
+	while (i != UNDEFINEED_PAGE_NUM)
 	{
 		RecordPage page;
 		page.tableName = TableName;
@@ -168,7 +160,7 @@ vector<PageId> Table::scanLess(int attrnum, Attribute attribute)
 		tuple.page = page;
 		tuple.createlist(TableName);
 		tuple.ParseFromRawData();
-		if(tuple.list[attrnum] < attribute)
+		if (tuple.list[attrnum] < attribute)
 			result.push_back(i);
 
 		i = page.readnext();
@@ -181,7 +173,7 @@ vector<PageId> Table::scanGreater(int attrnum, Attribute attribute)
 {
 	vector<PageId> result;
 	PageId i = head;
-	while(i != UNDEFINEED_PAGE_NUM)
+	while (i != UNDEFINEED_PAGE_NUM)
 	{
 		RecordPage page;
 		page.tableName = TableName;
@@ -192,7 +184,7 @@ vector<PageId> Table::scanGreater(int attrnum, Attribute attribute)
 		tuple.page = page;
 		tuple.createlist(TableName);
 		tuple.ParseFromRawData();
-		if(tuple.list[attrnum] > attribute)
+		if (tuple.list[attrnum] > attribute)
 			result.push_back(i);
 
 		i = page.readnext();
@@ -205,7 +197,7 @@ vector<PageId> Table::scanLessEqual(int attrnum, Attribute attribute)
 {
 	vector<PageId> result;
 	PageId i = head;
-	while(i != UNDEFINEED_PAGE_NUM)
+	while (i != UNDEFINEED_PAGE_NUM)
 	{
 
 		RecordPage page;
@@ -217,7 +209,7 @@ vector<PageId> Table::scanLessEqual(int attrnum, Attribute attribute)
 		tuple.page = page;
 		tuple.createlist(TableName);
 		tuple.ParseFromRawData();
-		if(tuple.list[attrnum] <= attribute)
+		if (tuple.list[attrnum] <= attribute)
 			result.push_back(i);
 
 		i = page.readnext();
@@ -230,7 +222,7 @@ vector<PageId> Table::scanGreaterEqual(int attrnum, Attribute attribute)
 {
 	vector<PageId> result;
 	PageId i = head;
-	while(i != UNDEFINEED_PAGE_NUM)
+	while (i != UNDEFINEED_PAGE_NUM)
 	{
 		RecordPage page;
 		page.tableName = TableName;
@@ -241,7 +233,7 @@ vector<PageId> Table::scanGreaterEqual(int attrnum, Attribute attribute)
 		tuple.page = page;
 		tuple.createlist(TableName);
 		tuple.ParseFromRawData();
-		if(tuple.list[attrnum] >= attribute)
+		if (tuple.list[attrnum] >= attribute)
 			result.push_back(i);
 
 		i = page.readnext();
@@ -261,7 +253,7 @@ vector<PageId> Table::getAll()
 		RecordPage page;
 		page.tableName = TableName;
 		page.pageIndex = i;
-		bm.readPage(page);		
+		bm.readPage(page);
 		i = page.readnext();
 	}
 
@@ -272,7 +264,7 @@ vector<pair<Attribute, PageId>> Table::getAll(int attrnum)
 {
 	vector<pair<Attribute, PageId>> result;
 	PageId i = head;
-	while(i != UNDEFINEED_PAGE_NUM)
+	while (i != UNDEFINEED_PAGE_NUM)
 	{
 		RecordPage page;
 		page.tableName = TableName;
@@ -311,37 +303,37 @@ vector<Attribute> Table::getTupleAtPage(PageId num)
 
 void Table::printinfo(PageId index)
 {
-    RecordPage page;
-    page.pageIndex = index;
-    page.tableName = TableName;
-    bm.readPage(page);
+	RecordPage page;
+	page.pageIndex = index;
+	page.tableName = TableName;
+	bm.readPage(page);
 
-    Tuple tuple;
-    tuple.page = page;
-    tuple.createlist(TableName);
-    tuple.ParseFromRawData();
+	Tuple tuple;
+	tuple.page = page;
+	tuple.createlist(TableName);
+	tuple.ParseFromRawData();
 
-    for(int i = 0; i < tuple.list.size(); i++)
-    {
-        switch(tuple.list[i].type)
-        {
-        case DataType::CHAR:
-            for (int j = 0; j < tuple.list[i].length; j++)
-                cout << tuple.list[i].chardata[j];
-            break;
-        case DataType::FLOAT:
-            printf("%.2f", tuple.list[i].floatdata);
-            break;
-        case DataType::INT:
-            cout << tuple.list[i].intdata;
-            break;
-        case DataType::UNDEFINED:;
-        default:
-            cout << "Type error!" ;
-            break;
-        }
-        cout << "\t\t\t";
-    }
-    cout << endl;
+	for (int i = 0; i < tuple.list.size(); i++)
+	{
+		switch (tuple.list[i].type)
+		{
+		case DataType::CHAR:
+			for (int j = 0; j < tuple.list[i].length; j++)
+				cout << tuple.list[i].chardata[j];
+			break;
+		case DataType::FLOAT:
+			printf("%.2f", tuple.list[i].floatdata);
+			break;
+		case DataType::INT:
+			cout << tuple.list[i].intdata;
+			break;
+		case DataType::UNDEFINED:;
+		default:
+			cout << "Type error!";
+			break;
+		}
+		cout << "\t\t\t";
+	}
+	cout << endl;
 
 }

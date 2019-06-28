@@ -1,12 +1,4 @@
-﻿//
-//  CatalogPage.cpp
-//  MiniSQL
-//
-//  Created by jerry on 15/10/25.
-//  Copyright © 2015年 Fan Wu. All rights reserved.
-//
-
-#include "RecordPage.hpp"
+﻿#include "RecordPage.hpp"
 
 void RecordPage::writenext(PageId next)
 {

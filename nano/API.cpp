@@ -1,12 +1,4 @@
-﻿//
-//  API.cpp
-//  MiniSQL
-//
-//  Created by zyy on 15/10/30.
-//  Copyright © 2015年 Fan Wu. All rights reserved.
-//
-
-#include "API.hpp"
+﻿#include "API.hpp"
 
 bool API::insertRecord(SQLcommand sql)
 {
