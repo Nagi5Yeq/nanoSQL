@@ -125,7 +125,8 @@ bool BufferManager::openTableFile(string tableName)
     string filePath = tableFilePath(tableName);
     if (tableFileHandles.find(tableName) == tableFileHandles.end())
     {
-        FILE* fp = fopen(filePath.c_str(), "wb+");
+		checkFileExistorCreate(filePath);
+        FILE* fp = fopen(filePath.c_str(), "rb+");
         if (fp == NULL)
             return false;
         tableFileHandles[tableName] = fp;
@@ -142,7 +143,8 @@ bool BufferManager::openIndexFile(string tableName, string attributeName)
     string filePath = indexFilePath(tableName, attributeName);
     if (indexFileHandles.find(indexPair) == indexFileHandles.end())
     {
-        FILE* fp = fopen(filePath.c_str(), "wb+");
+		checkFileExistorCreate(filePath);
+        FILE* fp = fopen(filePath.c_str(), "rb+");
         if (fp == NULL)
             return false;
         indexFileHandles[indexPair] = fp;
@@ -159,7 +161,8 @@ bool BufferManager::openTableCatalogFile(string tableName)
     string filePath = tableCatalogFilePath(tableName);
     if (tableCatalogFileHandles.find(tableName) == tableCatalogFileHandles.end())
     {
-        FILE* fp = fopen(filePath.c_str(),"wb+");
+		checkFileExistorCreate(filePath);
+        FILE* fp = fopen(filePath.c_str(),"rb+");
         if (fp == NULL)
             return false;
         tableCatalogFileHandles[tableName] = fp;
@@ -177,7 +180,8 @@ bool BufferManager::openIndexCatalogFile(string tableName, string attributeName)
     string filePath = indexCatalogFilePath(tableName, attributeName);
     if (indexCalalogFileHandles.find(indexPair) == indexCalalogFileHandles.end())
     {
-        FILE* fp = fopen(filePath.c_str(),"wb+");
+		checkFileExistorCreate(filePath);
+        FILE* fp = fopen(filePath.c_str(),"rb+");
         if (fp == NULL)
             return false;
         indexCalalogFileHandles[indexPair] = fp;

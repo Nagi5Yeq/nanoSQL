@@ -48,6 +48,15 @@ public:
 		// 初始化存放文件的文件夹，根据表名以及索引键建立文件
 	}
 
+	void checkFileExistorCreate(string filename) {
+		FILE *t;
+		t = fopen(filename.c_str(), "rb+");
+		if (t == NULL) {
+			t = fopen(filename.c_str(), "wb+");
+		}
+		fclose(t);
+	}
+
 	bool openTableFile(string tableName);
 	bool openIndexFile(string tableName, string attributeName);
 	bool openTableCatalogFile(string tableName);
