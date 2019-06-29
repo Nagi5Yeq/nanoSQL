@@ -235,73 +235,76 @@ bool API::selectRecord(SQLcommand sql)
 	}
 
 	vector<string> fmtstrs;
-
-	putchar('+');
-	for (auto itr : cm.tableInformation(sql.tableName)) {
-		int thislen;
-		int attrlen = (int)itr.attrName.length();
-		if (itr.type == DataType::INT) {
-			thislen = max(10, attrlen);
-			fmtstrs.push_back("%" + to_string(thislen) + "d");
-		}
-		else if (itr.type == DataType::CHAR) {
-			thislen = max(itr.length, attrlen);
-			fmtstrs.push_back("%" + to_string(thislen) + "s");
-		}
-		else {
-			thislen = max(8, attrlen);
-			fmtstrs.push_back("%" + to_string(thislen) + ".2f");
-		}
-		for (int i = 0; i < thislen; i++) {
-			putchar('-');
-		}
-		putchar('+');
-	}
-	putchar('\n');
-	putchar('|');
-	for (auto itr : cm.tableInformation(sql.tableName)) {
-		int attrlen = (int)itr.attrName.length();
-		if (itr.type == DataType::INT) {
-			attrlen = max(10, attrlen);
-		}
-		else if (itr.type == DataType::CHAR) {
-			attrlen = max(itr.length, attrlen);
-		}
-		else {
-			attrlen = max(8, attrlen);
-		}
-		printf("%*s", attrlen, itr.attrName.c_str());
-		putchar('|');
-	}
-	putchar('\n');
-	putchar('+');
-	for (auto itr : cm.tableInformation(sql.tableName)) {
-		int thislen;
-		int attrlen = (int)itr.attrName.length();
-		if (itr.type == DataType::INT) {
-			thislen = max(10, attrlen);
-		}
-		else if (itr.type == DataType::CHAR) {
-			thislen = max(itr.length, attrlen);
-		}
-		else {
-			thislen = max(8, attrlen);
-		}
-		for (int i = 0; i < thislen; i++) {
-			putchar('-');
-		}
-		putchar('+');
-	}
-	putchar('\n');
-
 	Table table(sql.tableName);
 
 	if (sql.condNum == 0) {
 		auto result = table.getAll();
-		for (auto itr : result) {
-			table.printinfo(itr, fmtstrs);
+		if (result.size() == 0) {
+			puts("Empty set.");
 		}
-		printf("Total %zu records selected\n", result.size());
+		else {
+			putchar('+');
+			for (auto itr : cm.tableInformation(sql.tableName)) {
+				int thislen;
+				int attrlen = (int)itr.attrName.length();
+				if (itr.type == DataType::INT) {
+					thislen = max(10, attrlen);
+					fmtstrs.push_back("%" + to_string(thislen) + "d");
+				}
+				else if (itr.type == DataType::CHAR) {
+					thislen = max(itr.length, attrlen);
+					fmtstrs.push_back("%" + to_string(thislen) + "s");
+				}
+				else {
+					thislen = max(8, attrlen);
+					fmtstrs.push_back("%" + to_string(thislen) + ".2f");
+				}
+				for (int i = 0; i < thislen; i++) {
+					putchar('-');
+				}
+				putchar('+');
+			}
+			putchar('\n');
+			putchar('|');
+			for (auto itr : cm.tableInformation(sql.tableName)) {
+				int attrlen = (int)itr.attrName.length();
+				if (itr.type == DataType::INT) {
+					attrlen = max(10, attrlen);
+				}
+				else if (itr.type == DataType::CHAR) {
+					attrlen = max(itr.length, attrlen);
+				}
+				else {
+					attrlen = max(8, attrlen);
+				}
+				printf("%*s", attrlen, itr.attrName.c_str());
+				putchar('|');
+			}
+			putchar('\n');
+			putchar('+');
+			for (auto itr : cm.tableInformation(sql.tableName)) {
+				int thislen;
+				int attrlen = (int)itr.attrName.length();
+				if (itr.type == DataType::INT) {
+					thislen = max(10, attrlen);
+				}
+				else if (itr.type == DataType::CHAR) {
+					thislen = max(itr.length, attrlen);
+				}
+				else {
+					thislen = max(8, attrlen);
+				}
+				for (int i = 0; i < thislen; i++) {
+					putchar('-');
+				}
+				putchar('+');
+			}
+			putchar('\n');
+			for (auto itr : result) {
+				table.printinfo(itr, fmtstrs);
+			}
+			printf("%zu rows selected (%fs)\n", result.size(), (float)(clock() - begin) / CLOCKS_PER_SEC);
+		}
 	}
 	else {
 		vector<PageId> result = table.getAll();
@@ -388,30 +391,91 @@ bool API::selectRecord(SQLcommand sql)
 			}
 			result = nextResult;
 		}
-
-		for (auto itr : result) {
-			table.printinfo(itr, fmtstrs);
+		if (result.size() == 0) {
+			puts("Empty set");
 		}
-		putchar('+');
-		for (auto itr : cm.tableInformation(sql.tableName)) {
-			int thislen;
-			int attrlen = (int)itr.attrName.length();
-			if (itr.type == DataType::INT) {
-				thislen = max(10, attrlen);
+		else {
+			putchar('+');
+			for (auto itr : cm.tableInformation(sql.tableName)) {
+				int thislen;
+				int attrlen = (int)itr.attrName.length();
+				if (itr.type == DataType::INT) {
+					thislen = max(10, attrlen);
+					fmtstrs.push_back("%" + to_string(thislen) + "d");
+				}
+				else if (itr.type == DataType::CHAR) {
+					thislen = max(itr.length, attrlen);
+					fmtstrs.push_back("%" + to_string(thislen) + "s");
+				}
+				else {
+					thislen = max(8, attrlen);
+					fmtstrs.push_back("%" + to_string(thislen) + ".2f");
+				}
+				for (int i = 0; i < thislen; i++) {
+					putchar('-');
+				}
+				putchar('+');
 			}
-			else if (itr.type == DataType::CHAR) {
-				thislen = max(itr.length, attrlen);
+			putchar('\n');
+			putchar('|');
+			for (auto itr : cm.tableInformation(sql.tableName)) {
+				int attrlen = (int)itr.attrName.length();
+				if (itr.type == DataType::INT) {
+					attrlen = max(10, attrlen);
+				}
+				else if (itr.type == DataType::CHAR) {
+					attrlen = max(itr.length, attrlen);
+				}
+				else {
+					attrlen = max(8, attrlen);
+				}
+				printf("%*s", attrlen, itr.attrName.c_str());
+				putchar('|');
 			}
-			else {
-				thislen = max(8, attrlen);
+			putchar('\n');
+			putchar('+');
+			for (auto itr : cm.tableInformation(sql.tableName)) {
+				int thislen;
+				int attrlen = (int)itr.attrName.length();
+				if (itr.type == DataType::INT) {
+					thislen = max(10, attrlen);
+				}
+				else if (itr.type == DataType::CHAR) {
+					thislen = max(itr.length, attrlen);
+				}
+				else {
+					thislen = max(8, attrlen);
+				}
+				for (int i = 0; i < thislen; i++) {
+					putchar('-');
+				}
+				putchar('+');
 			}
-			for (int i = 0; i < thislen; i++) {
-				putchar('-');
+			putchar('\n');
+			for (auto itr : result) {
+				table.printinfo(itr, fmtstrs);
 			}
 			putchar('+');
+			for (auto itr : cm.tableInformation(sql.tableName)) {
+				int thislen;
+				int attrlen = (int)itr.attrName.length();
+				if (itr.type == DataType::INT) {
+					thislen = max(10, attrlen);
+				}
+				else if (itr.type == DataType::CHAR) {
+					thislen = max(itr.length, attrlen);
+				}
+				else {
+					thislen = max(8, attrlen);
+				}
+				for (int i = 0; i < thislen; i++) {
+					putchar('-');
+				}
+				putchar('+');
+			}
+			putchar('\n');
+			printf("%zu rows selected (%fs)\n", result.size(), (float)(clock() - begin) / CLOCKS_PER_SEC);
 		}
-		putchar('\n');
-		printf("%zu rows selected (%fs)\n", result.size(), (float)(clock() - begin) / CLOCKS_PER_SEC);
 	}
 	return 1;
 }

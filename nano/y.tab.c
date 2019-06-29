@@ -92,7 +92,7 @@ vector<FILE*> previns;
 #undef DELETE
 
 
-#line 97 "y.tab.c" /* yacc.c:339  */
+#line 96 "y.tab.c" /* yacc.c:339  */
 
 # ifndef YY_NULLPTR
 #  if defined __cplusplus && 201103L <= __cplusplus
@@ -206,10 +206,10 @@ enum yytokentype
 
 union YYSTYPE
 {
-#line 31 "interpreter.ypp" /* yacc.c:355  */
+#line 30 "interpreter.ypp" /* yacc.c:355  */
 	char *strVal; char *id; int intVal; float flVal; char *condition;
 
-#line 214 "y.tab.c" /* yacc.c:355  */
+#line 213 "y.tab.c" /* yacc.c:355  */
 };
 
 typedef union YYSTYPE YYSTYPE;
@@ -226,7 +226,7 @@ int yyparse(void);
 
 /* Copy the second part of user declarations.  */
 
-#line 231 "y.tab.c" /* yacc.c:358  */
+#line 230 "y.tab.c" /* yacc.c:358  */
 
 #ifdef short
 # undef short
@@ -527,12 +527,12 @@ static const yytype_uint8 yytranslate[] =
 /* YYRLINE[YYN] -- Source line where rule number YYN was defined.  */
 static const yytype_uint16 yyrline[] =
 {
-	   0,    53,    53,    54,    57,    61,    65,    69,    73,    77,
-	  81,    85,   108,   118,   121,   124,   127,   128,   132,   143,
-	 155,   168,   169,   171,   172,   174,   175,   176,   178,   179,
-	 182,   190,   198,   207,   210,   211,   212,   213,   214,   215,
-	 220,   227,   228,   231,   232,   234,   236,   237,   239,   250,
-	 256,   259,   268,   272,   274,   278,   285,   287,   289
+	   0,    52,    52,    53,    56,    60,    64,    68,    72,    76,
+	  80,    84,   107,   117,   120,   123,   126,   127,   131,   142,
+	 154,   167,   168,   170,   171,   173,   174,   175,   177,   178,
+	 181,   189,   197,   206,   209,   210,   211,   212,   213,   214,
+	 219,   226,   227,   230,   231,   233,   235,   236,   238,   249,
+	 255,   258,   267,   271,   273,   277,   284,   286,   288
 };
 #endif
 
@@ -1379,70 +1379,70 @@ yyreduce:
 	switch (yyn)
 	{
 	case 4:
-#line 57 "interpreter.ypp" /* yacc.c:1646  */
+#line 56 "interpreter.ypp" /* yacc.c:1646  */
 	{
 		api.createTable(tableInfo);
 		tableInfo.reset();
 	}
-#line 1389 "y.tab.c" /* yacc.c:1646  */
+#line 1388 "y.tab.c" /* yacc.c:1646  */
 	break;
 
 	case 5:
-#line 61 "interpreter.ypp" /* yacc.c:1646  */
+#line 60 "interpreter.ypp" /* yacc.c:1646  */
 	{
 		api.createIndex(sql);
 		sql.reset();
 	}
-#line 1398 "y.tab.c" /* yacc.c:1646  */
+#line 1397 "y.tab.c" /* yacc.c:1646  */
 	break;
 
 	case 6:
-#line 65 "interpreter.ypp" /* yacc.c:1646  */
+#line 64 "interpreter.ypp" /* yacc.c:1646  */
 	{
 		api.selectRecord(sql);
 		sql.reset();
 	}
-#line 1407 "y.tab.c" /* yacc.c:1646  */
+#line 1406 "y.tab.c" /* yacc.c:1646  */
 	break;
 
 	case 7:
-#line 69 "interpreter.ypp" /* yacc.c:1646  */
+#line 68 "interpreter.ypp" /* yacc.c:1646  */
 	{
 		api.deleteRecord(sql);
 		sql.reset();
 	}
-#line 1416 "y.tab.c" /* yacc.c:1646  */
+#line 1415 "y.tab.c" /* yacc.c:1646  */
 	break;
 
 	case 8:
-#line 73 "interpreter.ypp" /* yacc.c:1646  */
+#line 72 "interpreter.ypp" /* yacc.c:1646  */
 	{
 		api.dropTable(sql);
 		sql.reset();
 	}
-#line 1425 "y.tab.c" /* yacc.c:1646  */
+#line 1424 "y.tab.c" /* yacc.c:1646  */
 	break;
 
 	case 9:
-#line 77 "interpreter.ypp" /* yacc.c:1646  */
+#line 76 "interpreter.ypp" /* yacc.c:1646  */
 	{
 		api.dropIndex(sql);
 		sql.reset();
 	}
-#line 1434 "y.tab.c" /* yacc.c:1646  */
+#line 1433 "y.tab.c" /* yacc.c:1646  */
 	break;
 
 	case 10:
-#line 81 "interpreter.ypp" /* yacc.c:1646  */
+#line 80 "interpreter.ypp" /* yacc.c:1646  */
 	{
 		api.insertRecord(sql);
 		sql.reset();
 	}
-#line 1443 "y.tab.c" /* yacc.c:1646  */
+#line 1442 "y.tab.c" /* yacc.c:1646  */
 	break;
 
 	case 11:
-#line 85 "interpreter.ypp" /* yacc.c:1646  */
+#line 84 "interpreter.ypp" /* yacc.c:1646  */
 	{
 		const char* path = (yyvsp[-1].strVal);
 		char temp[512];
@@ -1466,44 +1466,44 @@ yyreduce:
 			yyparse();
 		}
 	}
-#line 1471 "y.tab.c" /* yacc.c:1646  */
+#line 1470 "y.tab.c" /* yacc.c:1646  */
 	break;
 
 	case 12:
-#line 108 "interpreter.ypp" /* yacc.c:1646  */
+#line 107 "interpreter.ypp" /* yacc.c:1646  */
 	{
-		printf("Closing files and writing back buffer...\n");
+		printf("Closing files and writing back buffer...");
 		BufferManager bm;
 		bm.writeBackAllCache();
 		bm.closeAllFiles();
-		printf("Operation finished.\n");
+		printf("done.\n");
 
-		printf("Thank you~\n");
+		printf("Bye\n");
 		exit(EXIT_SUCCESS);
 	}
-#line 1486 "y.tab.c" /* yacc.c:1646  */
+#line 1485 "y.tab.c" /* yacc.c:1646  */
 	break;
 
 	case 13:
-#line 118 "interpreter.ypp" /* yacc.c:1646  */
+#line 117 "interpreter.ypp" /* yacc.c:1646  */
 	{}
-#line 1492 "y.tab.c" /* yacc.c:1646  */
+#line 1491 "y.tab.c" /* yacc.c:1646  */
 	break;
 
 	case 16:
-#line 127 "interpreter.ypp" /* yacc.c:1646  */
+#line 126 "interpreter.ypp" /* yacc.c:1646  */
 	{}
-#line 1498 "y.tab.c" /* yacc.c:1646  */
+#line 1497 "y.tab.c" /* yacc.c:1646  */
 	break;
 
 	case 17:
-#line 128 "interpreter.ypp" /* yacc.c:1646  */
+#line 127 "interpreter.ypp" /* yacc.c:1646  */
 	{}
-#line 1504 "y.tab.c" /* yacc.c:1646  */
+#line 1503 "y.tab.c" /* yacc.c:1646  */
 	break;
 
 	case 18:
-#line 132 "interpreter.ypp" /* yacc.c:1646  */
+#line 131 "interpreter.ypp" /* yacc.c:1646  */
 	{
 		if (sql.attrNum > 31) {
 			printf("Too many values!\n");
@@ -1515,11 +1515,11 @@ yyreduce:
 			sql.condCont[sql.attrNum].attrType = "CHAR";
 		}
 	}
-#line 1520 "y.tab.c" /* yacc.c:1646  */
+#line 1519 "y.tab.c" /* yacc.c:1646  */
 	break;
 
 	case 19:
-#line 143 "interpreter.ypp" /* yacc.c:1646  */
+#line 142 "interpreter.ypp" /* yacc.c:1646  */
 	{
 		if (sql.attrNum > 31) {
 			printf("Too many values!\n");
@@ -1532,11 +1532,11 @@ yyreduce:
 			sql.condCont[sql.attrNum].attrType = "INT";
 		}
 	}
-#line 1537 "y.tab.c" /* yacc.c:1646  */
+#line 1536 "y.tab.c" /* yacc.c:1646  */
 	break;
 
 	case 20:
-#line 155 "interpreter.ypp" /* yacc.c:1646  */
+#line 154 "interpreter.ypp" /* yacc.c:1646  */
 	{
 		if (sql.attrNum > 31) {
 			printf("Too many values!\n");
@@ -1548,53 +1548,53 @@ yyreduce:
 			sql.condCont[sql.attrNum].attrType = "FLOAT";
 		}
 	}
-#line 1553 "y.tab.c" /* yacc.c:1646  */
+#line 1552 "y.tab.c" /* yacc.c:1646  */
 	break;
 
 	case 21:
-#line 168 "interpreter.ypp" /* yacc.c:1646  */
+#line 167 "interpreter.ypp" /* yacc.c:1646  */
 	{ }
-#line 1559 "y.tab.c" /* yacc.c:1646  */
+#line 1558 "y.tab.c" /* yacc.c:1646  */
 	break;
 
 	case 22:
-#line 169 "interpreter.ypp" /* yacc.c:1646  */
+#line 168 "interpreter.ypp" /* yacc.c:1646  */
 	{; }
-#line 1565 "y.tab.c" /* yacc.c:1646  */
+#line 1564 "y.tab.c" /* yacc.c:1646  */
 	break;
 
 	case 25:
-#line 174 "interpreter.ypp" /* yacc.c:1646  */
+#line 173 "interpreter.ypp" /* yacc.c:1646  */
 	{ }
-#line 1571 "y.tab.c" /* yacc.c:1646  */
+#line 1570 "y.tab.c" /* yacc.c:1646  */
 	break;
 
 	case 26:
-#line 175 "interpreter.ypp" /* yacc.c:1646  */
+#line 174 "interpreter.ypp" /* yacc.c:1646  */
 	{; }
-#line 1577 "y.tab.c" /* yacc.c:1646  */
+#line 1576 "y.tab.c" /* yacc.c:1646  */
 	break;
 
 	case 27:
-#line 176 "interpreter.ypp" /* yacc.c:1646  */
+#line 175 "interpreter.ypp" /* yacc.c:1646  */
 	{; }
-#line 1583 "y.tab.c" /* yacc.c:1646  */
+#line 1582 "y.tab.c" /* yacc.c:1646  */
 	break;
 
 	case 28:
-#line 178 "interpreter.ypp" /* yacc.c:1646  */
+#line 177 "interpreter.ypp" /* yacc.c:1646  */
 	{; }
-#line 1589 "y.tab.c" /* yacc.c:1646  */
+#line 1588 "y.tab.c" /* yacc.c:1646  */
 	break;
 
 	case 29:
-#line 179 "interpreter.ypp" /* yacc.c:1646  */
+#line 178 "interpreter.ypp" /* yacc.c:1646  */
 	{; }
-#line 1595 "y.tab.c" /* yacc.c:1646  */
+#line 1594 "y.tab.c" /* yacc.c:1646  */
 	break;
 
 	case 30:
-#line 183 "interpreter.ypp" /* yacc.c:1646  */
+#line 182 "interpreter.ypp" /* yacc.c:1646  */
 	{
 		sql.condNum++;
 		sql.condCont[sql.condNum].attrName = tmpAttrName;
@@ -1602,11 +1602,11 @@ yyreduce:
 		sql.condCont[sql.condNum].attrValueFlo = (yyvsp[0].flVal);
 		sql.condCont[sql.condNum].attrType = "FLOAT";
 	}
-#line 1607 "y.tab.c" /* yacc.c:1646  */
+#line 1606 "y.tab.c" /* yacc.c:1646  */
 	break;
 
 	case 31:
-#line 191 "interpreter.ypp" /* yacc.c:1646  */
+#line 190 "interpreter.ypp" /* yacc.c:1646  */
 	{
 		sql.condNum++;
 		sql.condCont[sql.condNum].attrName = tmpAttrName;
@@ -1614,11 +1614,11 @@ yyreduce:
 		sql.condCont[sql.condNum].attrValueStr = (yyvsp[0].strVal);
 		sql.condCont[sql.condNum].attrType = "CHAR";
 	}
-#line 1619 "y.tab.c" /* yacc.c:1646  */
+#line 1618 "y.tab.c" /* yacc.c:1646  */
 	break;
 
 	case 32:
-#line 199 "interpreter.ypp" /* yacc.c:1646  */
+#line 198 "interpreter.ypp" /* yacc.c:1646  */
 	{
 		sql.condNum++;
 		sql.condCont[sql.condNum].attrName = tmpAttrName;
@@ -1627,68 +1627,68 @@ yyreduce:
 		sql.condCont[sql.condNum].attrValueInt = (yyvsp[0].intVal);
 		sql.condCont[sql.condNum].attrType = "INT";
 	}
-#line 1632 "y.tab.c" /* yacc.c:1646  */
+#line 1631 "y.tab.c" /* yacc.c:1646  */
 	break;
 
 	case 33:
-#line 207 "interpreter.ypp" /* yacc.c:1646  */
+#line 206 "interpreter.ypp" /* yacc.c:1646  */
 	{; }
-#line 1638 "y.tab.c" /* yacc.c:1646  */
+#line 1637 "y.tab.c" /* yacc.c:1646  */
 	break;
 
 	case 34:
-#line 210 "interpreter.ypp" /* yacc.c:1646  */
+#line 209 "interpreter.ypp" /* yacc.c:1646  */
 	{strcpy((yyval.strVal), ">="); }
-#line 1644 "y.tab.c" /* yacc.c:1646  */
+#line 1643 "y.tab.c" /* yacc.c:1646  */
 	break;
 
 	case 35:
-#line 211 "interpreter.ypp" /* yacc.c:1646  */
+#line 210 "interpreter.ypp" /* yacc.c:1646  */
 	{strcpy((yyval.strVal), "<="); }
-#line 1650 "y.tab.c" /* yacc.c:1646  */
+#line 1649 "y.tab.c" /* yacc.c:1646  */
 	break;
 
 	case 36:
-#line 212 "interpreter.ypp" /* yacc.c:1646  */
+#line 211 "interpreter.ypp" /* yacc.c:1646  */
 	{strcpy((yyval.strVal), "<>"); }
-#line 1656 "y.tab.c" /* yacc.c:1646  */
+#line 1655 "y.tab.c" /* yacc.c:1646  */
 	break;
 
 	case 37:
-#line 213 "interpreter.ypp" /* yacc.c:1646  */
+#line 212 "interpreter.ypp" /* yacc.c:1646  */
 	{strcpy((yyval.strVal), "<"); }
-#line 1662 "y.tab.c" /* yacc.c:1646  */
+#line 1661 "y.tab.c" /* yacc.c:1646  */
 	break;
 
 	case 38:
-#line 214 "interpreter.ypp" /* yacc.c:1646  */
+#line 213 "interpreter.ypp" /* yacc.c:1646  */
 	{strcpy((yyval.strVal), ">"); }
-#line 1668 "y.tab.c" /* yacc.c:1646  */
+#line 1667 "y.tab.c" /* yacc.c:1646  */
 	break;
 
 	case 39:
-#line 215 "interpreter.ypp" /* yacc.c:1646  */
+#line 214 "interpreter.ypp" /* yacc.c:1646  */
 	{strcpy((yyval.strVal), "="); }
-#line 1674 "y.tab.c" /* yacc.c:1646  */
+#line 1673 "y.tab.c" /* yacc.c:1646  */
 	break;
 
 	case 40:
-#line 220 "interpreter.ypp" /* yacc.c:1646  */
+#line 219 "interpreter.ypp" /* yacc.c:1646  */
 	{
 		sql.tableName = (yyvsp[0].id);
 		tableInfo.tableName = (yyvsp[0].id);
 	}
-#line 1683 "y.tab.c" /* yacc.c:1646  */
+#line 1682 "y.tab.c" /* yacc.c:1646  */
 	break;
 
 	case 42:
-#line 228 "interpreter.ypp" /* yacc.c:1646  */
+#line 227 "interpreter.ypp" /* yacc.c:1646  */
 	{printf("creating..."); }
-#line 1689 "y.tab.c" /* yacc.c:1646  */
+#line 1688 "y.tab.c" /* yacc.c:1646  */
 	break;
 
 	case 48:
-#line 239 "interpreter.ypp" /* yacc.c:1646  */
+#line 238 "interpreter.ypp" /* yacc.c:1646  */
 	{
 		if (tableInfo.attrNum < 32) {
 			tableInfo.attrNum++;
@@ -1700,28 +1700,28 @@ yyreduce:
 			yyparse();
 		}
 	}
-#line 1705 "y.tab.c" /* yacc.c:1646  */
+#line 1704 "y.tab.c" /* yacc.c:1646  */
 	break;
 
 	case 49:
-#line 250 "interpreter.ypp" /* yacc.c:1646  */
+#line 249 "interpreter.ypp" /* yacc.c:1646  */
 	{
 		tmpAttrName = (yyvsp[0].id);
 		sql.attrName = (yyvsp[0].id);
 	}
-#line 1714 "y.tab.c" /* yacc.c:1646  */
+#line 1713 "y.tab.c" /* yacc.c:1646  */
 	break;
 
 	case 50:
-#line 256 "interpreter.ypp" /* yacc.c:1646  */
+#line 255 "interpreter.ypp" /* yacc.c:1646  */
 	{
 		tableInfo.attrType[tableInfo.attrNum - 1] = "int";
 	}
-#line 1722 "y.tab.c" /* yacc.c:1646  */
+#line 1721 "y.tab.c" /* yacc.c:1646  */
 	break;
 
 	case 51:
-#line 259 "interpreter.ypp" /* yacc.c:1646  */
+#line 258 "interpreter.ypp" /* yacc.c:1646  */
 	{
 		if ((yyvsp[-1].intVal) > 255 || (yyvsp[-1].intVal) < 1) {
 			yyerror("Char is defined too long or too short!");
@@ -1731,61 +1731,61 @@ yyreduce:
 		else
 			tableInfo.attrType[tableInfo.attrNum - 1] = "char(" + to_string((yyvsp[-1].intVal)) + ")";
 	}
-#line 1736 "y.tab.c" /* yacc.c:1646  */
+#line 1735 "y.tab.c" /* yacc.c:1646  */
 	break;
 
 	case 52:
-#line 268 "interpreter.ypp" /* yacc.c:1646  */
+#line 267 "interpreter.ypp" /* yacc.c:1646  */
 	{
 		tableInfo.attrType[tableInfo.attrNum - 1] = "float";
 	}
-#line 1744 "y.tab.c" /* yacc.c:1646  */
+#line 1743 "y.tab.c" /* yacc.c:1646  */
 	break;
 
 	case 53:
-#line 272 "interpreter.ypp" /* yacc.c:1646  */
+#line 271 "interpreter.ypp" /* yacc.c:1646  */
 	{ }
-#line 1750 "y.tab.c" /* yacc.c:1646  */
+#line 1749 "y.tab.c" /* yacc.c:1646  */
 	break;
 
 	case 54:
-#line 274 "interpreter.ypp" /* yacc.c:1646  */
+#line 273 "interpreter.ypp" /* yacc.c:1646  */
 	{
 		tableInfo.primaryKey = (yyvsp[0].id);
 	}
-#line 1758 "y.tab.c" /* yacc.c:1646  */
+#line 1757 "y.tab.c" /* yacc.c:1646  */
 	break;
 
 	case 55:
-#line 278 "interpreter.ypp" /* yacc.c:1646  */
+#line 277 "interpreter.ypp" /* yacc.c:1646  */
 	{
 		tableInfo.attrUnique[tableInfo.attrNum - 1] = 'Y';
 	}
-#line 1766 "y.tab.c" /* yacc.c:1646  */
+#line 1765 "y.tab.c" /* yacc.c:1646  */
 	break;
 
 	case 56:
-#line 285 "interpreter.ypp" /* yacc.c:1646  */
+#line 284 "interpreter.ypp" /* yacc.c:1646  */
 	{; }
-#line 1772 "y.tab.c" /* yacc.c:1646  */
+#line 1771 "y.tab.c" /* yacc.c:1646  */
 	break;
 
 	case 57:
-#line 287 "interpreter.ypp" /* yacc.c:1646  */
+#line 286 "interpreter.ypp" /* yacc.c:1646  */
 	{; }
-#line 1778 "y.tab.c" /* yacc.c:1646  */
+#line 1777 "y.tab.c" /* yacc.c:1646  */
 	break;
 
 	case 58:
-#line 289 "interpreter.ypp" /* yacc.c:1646  */
+#line 288 "interpreter.ypp" /* yacc.c:1646  */
 	{
 		sql.indexName = (yyvsp[0].id);
 	}
-#line 1786 "y.tab.c" /* yacc.c:1646  */
+#line 1785 "y.tab.c" /* yacc.c:1646  */
 	break;
 
 
-#line 1790 "y.tab.c" /* yacc.c:1646  */
+#line 1789 "y.tab.c" /* yacc.c:1646  */
 	default: break;
 	}
 	/* User semantic actions sometimes alter yychar, and that requires
@@ -2013,7 +2013,7 @@ yyabortlab:
 #endif
 				   return yyresult;
 }
-#line 295 "interpreter.ypp" /* yacc.c:1906  */
+#line 294 "interpreter.ypp" /* yacc.c:1906  */
 
 void yyerror(const char *s)
 {

@@ -959,7 +959,7 @@ case 29:
 	/* rule 29 can match eol */
 	YY_RULE_SETUP
 	#line 64 "interpreter.lpp"
-	{ printf(">>> "); }
+	{ printf("nanoSQL> "); }
 		YY_BREAK
 	case 30:
 	YY_RULE_SETUP

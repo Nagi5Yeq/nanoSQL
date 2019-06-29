@@ -124,7 +124,7 @@ enum yytokentype
 
 union YYSTYPE
 {
-#line 31 "interpreter.ypp" /* yacc.c:1909  */
+#line 30 "interpreter.ypp" /* yacc.c:1909  */
 	char *strVal; char *id; int intVal; float flVal; char *condition;
 
 #line 131 "y.tab.h" /* yacc.c:1909  */

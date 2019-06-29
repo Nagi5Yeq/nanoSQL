@@ -23,11 +23,12 @@
     }
     extern char* yytext;
     extern FILE* yyin;
+    vector<FILE*> previns;
     #undef DELETE
     %}
 
 %union {char *strVal;char *id;int intVal;float flVal;char *condition;}
-%token UNIQUE TABLE SELECT INSERT DROP DELETE INDEX QUIT EXECFILE FROM WHERE CREATE RESET
+%token UNIQUE TABLE SELECT INSERT DROP DELETE INDEX QUIT EXECFILE FROM WHERE CREATE RESET COMMENT
 %token INTO VALUES ON PRIMARY KEY INTT CHART FLOATT ANND
 %token UNEXPECTED WHITESPACE FEOF ERR
 %token <strVal> STRING FILENAME
@@ -48,9 +49,11 @@
 %%
 
 
+line : line command
+| command
+;
 
-
-line	: create_table ';'	{
+command : create_table ';' {
     api.createTable(tableInfo);
     tableInfo.reset();
 }
@@ -96,81 +99,23 @@ line	: create_table ';'	{
         printf("Cannot open file %s\n", $2);
     else {
         fileflag=1;
+        previns.push_back(yyin);
         yyin=fp;
+        yyparse();
     }
 }
 | QUIT ';'	{
-    printf("Closing files and writing back buffer...\n");
+    printf("Closing files and writing back buffer...");
     BufferManager bm;
     bm.writeBackAllCache();
     bm.closeAllFiles();
-    printf("Operation finished.\n");
+    printf("done.\n");
     
-    printf("Thank you~\n");
+    printf("Bye\n");
     exit(EXIT_SUCCESS);
 }
-
-| line QUIT ';'	{
-    printf("Closing files and writing back buffer...\n");
-    BufferManager bm;
-    bm.writeBackAllCache();
-    bm.closeAllFiles();
-    printf("Operation finished.\n");
-    
-    printf("Thanks for using~\n");
-    exit(EXIT_SUCCESS);
-}
-| line create_table ';'	{
-    api.createTable(tableInfo);
-    tableInfo.reset();
-}
-| line create_index ';' {
-    api.createIndex(sql);
-    sql.reset();
-}
-| line select_statement ';' {
-    api.selectRecord(sql);
-    sql.reset();
-}
-| line delete_statement ';'	{
-    api.deleteRecord(sql);
-    sql.reset();
-}
-| line insert_statement ';' {
-    api.insertRecord(sql);
-    sql.reset();
-}
-| line drop_table ';' {
-    api.dropTable(sql);
-    sql.reset();
-}
-| line drop_index ';' {
-    api.dropIndex(sql);
-    sql.reset();
-}
-| line EXECFILE STRING ';' {
-    const char* path=$3;
-    char temp[512];
-    int i;
-    getcwd(temp, 512);
-    std::string s;
-    for (i=0; temp[i]!='\0'; i++)
-    s+=temp[i];
-    
-    s+='/';
-    char file[50];
-    strcpy(file,s.c_str());
-    strcat(file,path);
-    FILE *fp=fopen(file,"r");
-    if(fp==NULL)
-    printf("Cannot open file %s\n", $3);
-    else {
-        fileflag=1;
-        yyin=fp;
-    }
-}
+| COMMENT {}
 ;
-
 
 create_index	: CREATE INDEX indexname ON tablename '(' attrname ')'
 ;
@@ -254,7 +199,7 @@ condition	: attrname operation fnum
     sql.condNum++;
     sql.condCont[sql.condNum].attrName=tmpAttrName;
     sql.condCont[sql.condNum].op=$2;
-    sql.condCont[sql.condNum].attrValueFlo=$3;
+    sql.condCont[sql.condNum].attrValueFlo=(float)$3;
     sql.condCont[sql.condNum].attrValueInt=$3;
     sql.condCont[sql.condNum].attrType="INT";
 }
