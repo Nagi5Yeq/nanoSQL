@@ -9,13 +9,10 @@
         extern void yyerror(const char *s);
     }
     #include <iostream>
-    #include <vector>
-    using namespace std;
     #include "y.tab.h"
     extern void yyerror(const char *s);
     extern clock_t t1,t2;
     extern int fileflag;
-    extern vector<FILE*> previns;
 %}
 
 nondigit	[a-zA-z_]
@@ -54,8 +51,6 @@ identifier  {nondigit}({nondigit}|{digit})*
 ">="	{return GE;}
 "<>"	{return NE;}
 
-"--"[^\n]*  {return COMMENT;}
-
 [<>=]	{return yytext[0];}
 [ \t]+	{;}
 {identifier}	{yylval.id=yytext;return identifier;}
@@ -64,7 +59,7 @@ identifier  {nondigit}({nondigit}|{digit})*
 [\n]	{ printf(">>> "); }
 
 [-]?{digit}+"."{digit}+ {
-    yylval.flVal=(float)atoi(yytext);
+    yylval.flVal=atoi(yytext);
     int i,flag=0;
     float di=10.0;
     for(i=0; i<strlen(yytext); i++)
@@ -99,18 +94,11 @@ identifier  {nondigit}({nondigit}|{digit})*
 
 .	{printf("Invalid character!\n");}
 
+
 %%
-
-FILE* popfp(){
-    FILE *r;
-    r=previns[previns.size()-1];
-    previns.pop_back();
-    return r;
-}
-
 int yywrap(void)
 {
-    yyin=popfp();
+    yyin=stdin;
     fileflag=0;
     return 0;
 }

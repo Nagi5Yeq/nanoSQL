@@ -11,12 +11,11 @@ const string BufferManager::recordCatalogFilesDirectory = ".\\RecordCatalogFiles
 const string BufferManager::indexCatalogFilesDirectory = ".\\IndexCatalogFiles";
 
 Page BufferManager::cachePages[CACHECAPACITY];
-bool BufferManager::pined[CACHECAPACITY];
 bool BufferManager::isDirty[CACHECAPACITY];
 int BufferManager::lruCounter[CACHECAPACITY];
 
-void BufferManager::makeTwoPages(FILE* fp)
-{ //如果文件太小将其扩充至两页
+void BufferManager::initPages(FILE* fp)
+{ // 初始化文件
 	fseek(fp, 0, SEEK_END);
 	if (ftell(fp) / PAGESIZE < 2)
 	{
@@ -130,7 +129,7 @@ bool BufferManager::openTableFile(string tableName)
 		if (fp == NULL)
 			return false;
 		tableFileHandles[tableName] = fp;
-		makeTwoPages(fp);
+		initPages(fp);
 		return true;
 	}
 	cout << "File " << filePath << " " << "already opened" << endl;
@@ -148,7 +147,7 @@ bool BufferManager::openIndexFile(string tableName, string attributeName)
 		if (fp == NULL)
 			return false;
 		indexFileHandles[indexPair] = fp;
-		makeTwoPages(fp);
+		initPages(fp);
 		return true;
 	}
 	cout << "File " << filePath << " "
@@ -166,7 +165,7 @@ bool BufferManager::openTableCatalogFile(string tableName)
 		if (fp == NULL)
 			return false;
 		tableCatalogFileHandles[tableName] = fp;
-		makeTwoPages(fp);
+		initPages(fp);
 		return true;
 	}
 	cout << "File " << filePath << " "
@@ -185,36 +184,12 @@ bool BufferManager::openIndexCatalogFile(string tableName, string attributeName)
 		if (fp == NULL)
 			return false;
 		indexCalalogFileHandles[indexPair] = fp;
-		makeTwoPages(fp);
+		initPages(fp);
 		return true;
 	}
 	cout << "File " << filePath << " "
 		<< "already opened" << endl;
 	return false;
-}
-
-void BufferManager::pinPage(Page &page)
-{ //锁定cache中的指定页
-	for (int i = 0; i < CACHECAPACITY; ++i)
-	{
-		if (cachePages[i] == page)
-		{
-			pined[i] = true;
-			break;
-		}
-	}
-}
-
-void BufferManager::unpinPage(Page &page)
-{ //解锁cache中的指定页
-	for (int i = 0; i < CACHECAPACITY; ++i)
-	{
-		if (cachePages[i] == page)
-		{
-			pined[i] = false;
-			break;
-		}
-	}
 }
 
 void BufferManager::updateLRU(int index)
@@ -246,7 +221,7 @@ int BufferManager::getInsteadCachePage()
 	int bigSaver = -1;
 	for (int i = 0; i < CACHECAPACITY; ++i)
 	{
-		if ((!pined[i]) && (lruCounter[i] > bigSaver))
+		if (lruCounter[i] > bigSaver)
 		{
 			retIndex = i;
 			bigSaver = lruCounter[i];
@@ -261,10 +236,9 @@ void BufferManager::writeBackAllCache()
 	{
 		if (isDirty[i])
 		{
-			forceWritePage(cachePages[i]);
+			writeToDisk(cachePages[i]);
 			isDirty[i] = false;
 		}
-		pined[i] = false;
 		lruCounter[i] = 0;
 	}
 }
@@ -273,7 +247,6 @@ void BufferManager::clearCache()
 	for (int i = 0; i < CACHECAPACITY; ++i)
 	{
 		cachePages[i].pageType = PageType::UndefinedPage;
-		pined[i] = false;
 		isDirty[i] = false;
 		lruCounter[i] = 0;
 	}
@@ -405,14 +378,14 @@ bool BufferManager::readPage(Page &page)
 	int pageIndex = getPageIndex(page);
 	if (pageIndex == -1)
 	{
-		forceReadPage(page); // May cause bug
+		readFromDisk(page); // May cause bug
 		pageIndex = getInsteadCachePage();
 		if (pageIndex != -1)
 		{
 			if (isDirty[pageIndex])
 			{
 				isDirty[pageIndex] = false;
-				forceWritePage(cachePages[pageIndex]);
+				writeToDisk(cachePages[pageIndex]);
 			}
 			cachePages[pageIndex] = page;
 			updateLRU(pageIndex);
@@ -429,7 +402,7 @@ bool BufferManager::readPage(Page &page)
 	return false;
 }
 
-bool BufferManager::forceReadPage(Page &page)
+bool BufferManager::readFromDisk(Page &page)
 { //直接从文件中读取信息
 	assert(page.pageType != PageType::UndefinedPage);
 	assert(page.pageIndex != UNDEFINEED_PAGE_NUM);
@@ -447,14 +420,14 @@ bool BufferManager::writePage(Page &page)
 	int pageIndex = getPageIndex(page);
 	if (pageIndex == -1)
 	{
-		forceWritePage(page); // May cause bug
+		writeToDisk(page); // May cause bug
 		pageIndex = getInsteadCachePage();
 		if (pageIndex != -1)
 		{
 			if (isDirty[pageIndex])
 			{
 				isDirty[pageIndex] = false;
-				forceWritePage(cachePages[pageIndex]);
+				writeToDisk(cachePages[pageIndex]);
 			}
 			cachePages[pageIndex] = page;
 			updateLRU(pageIndex);
@@ -472,7 +445,7 @@ bool BufferManager::writePage(Page &page)
 	return false;
 }
 
-bool BufferManager::forceWritePage(Page &page)
+bool BufferManager::writeToDisk(Page &page)
 { //直接将该页数据写入对应文件中
 	assert(page.pageType != PageType::UndefinedPage);
 	assert(page.pageIndex != UNDEFINEED_PAGE_NUM);

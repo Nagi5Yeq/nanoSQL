@@ -1,11 +1,18 @@
-﻿#ifndef Page_hpp
-#define Page_hpp
+#ifndef Global_hpp
+#define Global_hpp
 
-#include "Global.h"
+#include <iostream>
 #include <cstring>
 #include <string>
-
+#include "assert.h"
 using namespace std;
+
+enum class DataType {
+	UNDEFINED,
+	INT,
+	FLOAT,
+	CHAR
+};
 
 enum class PageType {
 	UndefinedPage,
@@ -14,6 +21,16 @@ enum class PageType {
 	RecordCatalogPage,
 	IndexCatalogPage
 };
+
+typedef int PageId;
+const int MAXPATHDEEPTH = 100;
+const int MAXATTRNUM = 32;
+const int PAGESIZE = 4096 * sizeof(char);
+const int NODESIZE = 1024;
+const PageId ROOTPAGE = 1;
+const PageId UNDEFINEED_PAGE_NUM = -1;
+const int CACHECAPACITY = 10;
+const int LRUCOUNTERMAX = 2000000000;
 
 class Page {
 public:
@@ -50,4 +67,4 @@ public:
 	char            pageData[PAGESIZE];
 };
 
-#endif /* Page_hpp */
+#endif

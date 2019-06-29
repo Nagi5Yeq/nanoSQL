@@ -1,8 +1,7 @@
 ﻿#ifndef BufferManager_hpp
 #define BufferManager_hpp
 
-#include "Global.h"
-#include "Page.hpp"
+#include "Global.hpp"
 #include <stdio.h>
 #include <sys/stat.h>
 #include <sys/types.h>
@@ -62,7 +61,7 @@ public:
 	bool openTableCatalogFile(string tableName);
 	bool openIndexCatalogFile(string tableName, string attributeName);
 
-	void makeTwoPages(FILE *fp);
+	void initPages(FILE *fp);
 
 	bool closeTableFile(string tableName);
 	bool closeIndexFile(string tableName, string attributeName);
@@ -90,9 +89,9 @@ public:
 	inline string indexCatalogFilePath(string tableName, string attributeName);
 
 	bool readPage(Page &page);
-	bool forceReadPage(Page &page);
+	bool readFromDisk(Page &page);
 	bool writePage(Page &page);
-	bool forceWritePage(Page &page);
+	bool writeToDisk(Page &page);
 	bool allocatePage(Page &page);
 	bool deallocatePage(Page &page);
 
@@ -100,8 +99,6 @@ public:
 
 	void closeAllFiles();
 
-	void pinPage(Page &page);
-	void unpinPage(Page &page);
 	void updateLRU(int index);
 	int getPageIndex(Page &page);
 	int getInsteadCachePage();
@@ -120,7 +117,6 @@ public:
 	static const string indexCatalogFilesDirectory;
 
 	static Page cachePages[CACHECAPACITY];
-	static bool pined[CACHECAPACITY];
 	static bool isDirty[CACHECAPACITY];
 	static int lruCounter[CACHECAPACITY];
 };

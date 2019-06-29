@@ -1,6 +1,73 @@
-﻿#include "Table.hpp"
+﻿#include "RecordManager.hpp"
 
 BufferManager  bm;
+
+void RecordPage::updateNext(PageId next)
+{
+	memcpy(pageData, &next, sizeof(PageId));
+}
+
+void RecordPage::updatePrev(PageId before)
+{
+	memcpy(pageData + sizeof(PageId), &before, sizeof(PageId));
+}
+
+PageId RecordPage::getNext()
+{
+	PageId next;
+	memcpy(&next, pageData, sizeof(PageId));
+	return next;
+}
+
+PageId RecordPage::getPrev()
+{
+	PageId before;
+	memcpy(&before, pageData + sizeof(PageId), sizeof(PageId));
+	return before;
+}
+
+void Tuple::createList(string TableName)
+{
+	CatalogManager cm;
+	list = cm.tableInformation(TableName);
+}
+
+void Tuple::createPage(string TableName)
+{
+	BufferManager bm;
+	page.tableName = TableName;
+	bm.allocatePage(page);
+}
+
+void Tuple::convertToRawData()
+{
+	assert(page.pageType != PageType::UndefinedPage);
+	char *cursor = page.pageData;
+	cursor += 2 * sizeof(PageId);
+
+	for (unsigned int i = 0; i < list.size(); i++)
+	{
+		list[i].convertToRawData();
+		memcpy(cursor, list[i].rawdata, list[i].getKeyDataLength());
+		cursor += list[i].getKeyDataLength();
+		assert(list[i].type != DataType::UNDEFINED);
+	}
+}
+
+void Tuple::parseFromRawData()
+{
+	assert(page.pageType != PageType::UndefinedPage);
+	char *cursor = page.pageData;
+	cursor += 2 * sizeof(PageId);
+
+	for (unsigned int i = 0; i < list.size(); i++)
+	{
+		memcpy(list[i].rawdata, cursor, list[i].getKeyDataLength());
+		cursor += list[i].getKeyDataLength();
+		list[i].parseFromRawData();
+		assert(list[i].type != DataType::UNDEFINED);
+	}
+}
 
 Table::Table(string name)
 {
@@ -9,7 +76,7 @@ Table::Table(string name)
 	page.pageIndex = 1;
 	page.tableName = name;
 	bm.readPage(page);
-	head = page.readnext();
+	head = page.getNext();
 	if (head == 0)
 		head = UNDEFINEED_PAGE_NUM;
 
@@ -22,7 +89,7 @@ Table::~Table()
 	page.pageIndex = 1;
 	page.tableName = TableName;
 	bm.readPage(page);
-	page.writenext(head);
+	page.updateNext(head);
 	bm.writePage(page);
 }
 
@@ -32,15 +99,15 @@ PageId Table::insertTuple(vector<Attribute> list)
 	tuple.list = list;
 	tuple.createPage(TableName);
 
-	tuple.page.writebefore(1);
-	tuple.page.writenext(head);
+	tuple.page.updatePrev(1);
+	tuple.page.updateNext(head);
 	if (head != UNDEFINEED_PAGE_NUM)
 	{
 		RecordPage page;
 		page.pageIndex = head;
 		page.tableName = TableName;
 		bm.readPage(page);
-		page.writebefore(tuple.page.pageIndex);
+		page.updatePrev(tuple.page.pageIndex);
 		bm.writePage(page);
 	}
 	head = tuple.page.pageIndex;
@@ -57,8 +124,8 @@ void Table::deleteTuple(PageId index)
 	page.tableName = TableName;
 	bm.readPage(page);
 
-	PageId next = page.readnext();
-	PageId before = page.readbefore();
+	PageId next = page.getNext();
+	PageId before = page.getPrev();
 	if (before == 1) {
 		head = next;
 	}
@@ -68,7 +135,7 @@ void Table::deleteTuple(PageId index)
 		beforepage.pageIndex = before;
 		beforepage.tableName = TableName;
 		bm.readPage(beforepage);
-		beforepage.writenext(UNDEFINEED_PAGE_NUM);
+		beforepage.updateNext(UNDEFINEED_PAGE_NUM);
 		bm.writePage(beforepage);
 	}
 	else
@@ -82,8 +149,8 @@ void Table::deleteTuple(PageId index)
 		beforepage.tableName = TableName;
 		bm.readPage(beforepage);
 
-		beforepage.writenext(nextpage.pageIndex);
-		nextpage.writebefore(beforepage.pageIndex);
+		beforepage.updateNext(nextpage.pageIndex);
+		nextpage.updatePrev(beforepage.pageIndex);
 
 		bm.writePage(beforepage);
 		bm.writePage(nextpage);
@@ -107,13 +174,13 @@ vector<PageId> Table::scanEqual(int attrnum, Attribute attribute)
 
 		Tuple tuple;
 		tuple.page = page;
-		tuple.createlist(TableName);
-		tuple.ParseFromRawData();
+		tuple.createList(TableName);
+		tuple.parseFromRawData();
 
 		if (tuple.list[attrnum] == attribute)
 			result.push_back(i);
 
-		i = page.readnext();
+		i = page.getNext();
 	}
 
 	return result;
@@ -133,13 +200,13 @@ vector<PageId> Table::scanNotEqual(int attrnum, Attribute attribute)
 
 		Tuple tuple;
 		tuple.page = page;
-		tuple.createlist(TableName);
-		tuple.ParseFromRawData();
+		tuple.createList(TableName);
+		tuple.parseFromRawData();
 
 		if (tuple.list[attrnum] != attribute)
 			result.push_back(i);
 
-		i = page.readnext();
+		i = page.getNext();
 	}
 
 	return result;
@@ -158,12 +225,12 @@ vector<PageId> Table::scanLess(int attrnum, Attribute attribute)
 
 		Tuple tuple;
 		tuple.page = page;
-		tuple.createlist(TableName);
-		tuple.ParseFromRawData();
+		tuple.createList(TableName);
+		tuple.parseFromRawData();
 		if (tuple.list[attrnum] < attribute)
 			result.push_back(i);
 
-		i = page.readnext();
+		i = page.getNext();
 	}
 
 	return result;
@@ -182,12 +249,12 @@ vector<PageId> Table::scanGreater(int attrnum, Attribute attribute)
 
 		Tuple tuple;
 		tuple.page = page;
-		tuple.createlist(TableName);
-		tuple.ParseFromRawData();
+		tuple.createList(TableName);
+		tuple.parseFromRawData();
 		if (tuple.list[attrnum] > attribute)
 			result.push_back(i);
 
-		i = page.readnext();
+		i = page.getNext();
 	}
 
 	return result;
@@ -207,12 +274,12 @@ vector<PageId> Table::scanLessEqual(int attrnum, Attribute attribute)
 
 		Tuple tuple;
 		tuple.page = page;
-		tuple.createlist(TableName);
-		tuple.ParseFromRawData();
+		tuple.createList(TableName);
+		tuple.parseFromRawData();
 		if (tuple.list[attrnum] <= attribute)
 			result.push_back(i);
 
-		i = page.readnext();
+		i = page.getNext();
 	}
 
 	return result;
@@ -231,12 +298,12 @@ vector<PageId> Table::scanGreaterEqual(int attrnum, Attribute attribute)
 
 		Tuple tuple;
 		tuple.page = page;
-		tuple.createlist(TableName);
-		tuple.ParseFromRawData();
+		tuple.createList(TableName);
+		tuple.parseFromRawData();
 		if (tuple.list[attrnum] >= attribute)
 			result.push_back(i);
 
-		i = page.readnext();
+		i = page.getNext();
 	}
 
 	return result;
@@ -254,7 +321,7 @@ vector<PageId> Table::getAll()
 		page.tableName = TableName;
 		page.pageIndex = i;
 		bm.readPage(page);
-		i = page.readnext();
+		i = page.getNext();
 	}
 
 	return result;
@@ -273,14 +340,14 @@ vector<pair<Attribute, PageId>> Table::getAll(int attrnum)
 
 		Tuple tuple;
 		tuple.page = page;
-		tuple.createlist(TableName);
-		tuple.ParseFromRawData();
+		tuple.createList(TableName);
+		tuple.parseFromRawData();
 		pair<Attribute, PageId> p;
 		p.first = tuple.list[attrnum];
 		p.second = i;
 		result.push_back(p);
 
-		i = page.readnext();
+		i = page.getNext();
 	}
 
 	return result;
@@ -295,13 +362,13 @@ vector<Attribute> Table::getTupleAtPage(PageId num)
 
 	Tuple tuple;
 	tuple.page = page;
-	tuple.createlist(TableName);
-	tuple.ParseFromRawData();
+	tuple.createList(TableName);
+	tuple.parseFromRawData();
 
 	return tuple.list;
 }
 
-void Table::printinfo(PageId index)
+void Table::printinfo(PageId index, vector<string> fmtstrs)
 {
 	RecordPage page;
 	page.pageIndex = index;
@@ -310,29 +377,29 @@ void Table::printinfo(PageId index)
 
 	Tuple tuple;
 	tuple.page = page;
-	tuple.createlist(TableName);
-	tuple.ParseFromRawData();
+	tuple.createList(TableName);
+	tuple.parseFromRawData();
 
+	putchar('|');
 	for (int i = 0; i < tuple.list.size(); i++)
 	{
 		switch (tuple.list[i].type)
 		{
 		case DataType::CHAR:
-			for (int j = 0; j < tuple.list[i].length; j++)
-				cout << tuple.list[i].chardata[j];
+			printf(fmtstrs[i].c_str(), tuple.list[i].chardata);
 			break;
 		case DataType::FLOAT:
-			printf("%.2f", tuple.list[i].floatdata);
+			printf(fmtstrs[i].c_str(), tuple.list[i].floatdata);
 			break;
 		case DataType::INT:
-			cout << tuple.list[i].intdata;
+			printf(fmtstrs[i].c_str(), tuple.list[i].intdata);
 			break;
 		case DataType::UNDEFINED:;
 		default:
 			cout << "Type error!";
 			break;
 		}
-		cout << "\t\t\t";
+		putchar('|');
 	}
 	cout << endl;
 

@@ -1,5 +1,5 @@
-﻿#ifndef Table_hpp
-#define Table_hpp
+﻿#ifndef RecordManager_hpp
+#define RecordManager_hpp
 
 #include <cstdio>
 #include <cstring>
@@ -7,10 +7,36 @@
 #include <cassert>
 #include <vector>
 #include <utility>
+#include "CatalogManager.hpp"
 #include "BufferManager.hpp"
 #include "Attribute.hpp"
-#include "RecordPage.hpp"
-#include "Tuple.hpp"
+
+class RecordPage : public Page
+{
+public:
+	RecordPage() { pageType = PageType::RecordPage; }
+	~RecordPage() {};
+
+	void updateNext(PageId);
+	void updatePrev(PageId);
+	PageId getNext();
+	PageId getPrev();
+
+};
+
+class Tuple {
+public:
+	Tuple() {}
+	~Tuple() {}
+
+	void createList(string);
+	void createPage(string);
+	void convertToRawData();
+	void parseFromRawData();
+
+	RecordPage page;
+	vector<Attribute> list;
+};
 
 class Table {
 public:
@@ -30,7 +56,7 @@ public:
 	vector<PageId> getAll();
 	vector<pair<Attribute, PageId>> getAll(int);
 	vector<Attribute> getTupleAtPage(PageId);
-	void printinfo(PageId);
+	void printinfo(PageId, vector<string>);
 
 	PageId head;
 	string TableName;

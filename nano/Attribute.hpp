@@ -6,7 +6,7 @@
 #include <cstdlib>
 #include <cassert>
 #include <cmath>
-#include "Global.h"
+#include "Global.hpp"
 
 using namespace std;
 

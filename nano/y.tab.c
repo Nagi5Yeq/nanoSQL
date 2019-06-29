@@ -70,7 +70,6 @@
 #include <string>
 #include <time.h>
 #include "SQLcommand.hpp"
-#include "TableInfo.hpp"
 #include "ConditionContent.hpp"
 #include "CatalogManager.hpp"
 #include "API.hpp"

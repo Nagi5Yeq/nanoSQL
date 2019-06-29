@@ -3,7 +3,7 @@
 
 #include <cstdio>
 #include <string>
-#include "TableInfo.hpp"
+#include "CatalogManager.hpp"
 #include "ConditionContent.hpp"
 using namespace std;
 

@@ -4,13 +4,12 @@
 #include <ctime>
 #include <cstdio>
 #include "SQLcommand.hpp"
-#include "TableInfo.hpp"
 #include "CatalogManager.hpp"
 #include "Attribute.hpp"
 #include <vector>
 #include <cstdio>
-#include "Table.hpp"
-#include "BPTree.hpp"
+#include "RecordManager.hpp"
+#include "IndexManager.hpp"
 #include <algorithm>
 
 

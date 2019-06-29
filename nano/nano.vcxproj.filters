@@ -21,55 +21,31 @@
     <ClCompile Include="Attribute.cpp">
       <Filter>源文件</Filter>
     </ClCompile>
-    <ClCompile Include="BPTree.cpp">
-      <Filter>源文件</Filter>
-    </ClCompile>
-    <ClCompile Include="BPTreeEntry.cpp">
-      <Filter>源文件</Filter>
-    </ClCompile>
-    <ClCompile Include="BPTreeKey.cpp">
-      <Filter>源文件</Filter>
-    </ClCompile>
-    <ClCompile Include="BPTreeNode.cpp">
-      <Filter>源文件</Filter>
-    </ClCompile>
     <ClCompile Include="BufferManager.cpp">
       <Filter>源文件</Filter>
     </ClCompile>
     <ClCompile Include="CatalogManager.cpp">
       <Filter>源文件</Filter>
     </ClCompile>
-    <ClCompile Include="CatalogPage.cpp">
-      <Filter>源文件</Filter>
-    </ClCompile>
     <ClCompile Include="ConditionContent.cpp">
-      <Filter>源文件</Filter>
-    </ClCompile>
-    <ClCompile Include="IndexCatalogPage.cpp">
       <Filter>源文件</Filter>
     </ClCompile>
     <ClCompile Include="main.cpp">
       <Filter>源文件</Filter>
     </ClCompile>
-    <ClCompile Include="RecordPage.cpp">
-      <Filter>源文件</Filter>
-    </ClCompile>
     <ClCompile Include="SQLcommand.cpp">
-      <Filter>源文件</Filter>
-    </ClCompile>
-    <ClCompile Include="Table.cpp">
-      <Filter>源文件</Filter>
-    </ClCompile>
-    <ClCompile Include="TableInfo.cpp">
-      <Filter>源文件</Filter>
-    </ClCompile>
-    <ClCompile Include="Tuple.cpp">
       <Filter>源文件</Filter>
     </ClCompile>
     <ClCompile Include="y.tab.c">
       <Filter>源文件</Filter>
     </ClCompile>
     <ClCompile Include="lex.yy.cpp">
+      <Filter>源文件</Filter>
+    </ClCompile>
+    <ClCompile Include="RecordManager.cpp">
+      <Filter>源文件</Filter>
+    </ClCompile>
+    <ClCompile Include="IndexManager.cpp">
       <Filter>源文件</Filter>
     </ClCompile>
   </ItemGroup>
@@ -80,55 +56,28 @@
     <ClInclude Include="Attribute.hpp">
       <Filter>头文件</Filter>
     </ClInclude>
-    <ClInclude Include="BPTree.hpp">
-      <Filter>头文件</Filter>
-    </ClInclude>
-    <ClInclude Include="BPTreeEntry.hpp">
-      <Filter>头文件</Filter>
-    </ClInclude>
-    <ClInclude Include="BPTreeKey.hpp">
-      <Filter>头文件</Filter>
-    </ClInclude>
-    <ClInclude Include="BPTreeNode.hpp">
-      <Filter>头文件</Filter>
-    </ClInclude>
     <ClInclude Include="BufferManager.hpp">
       <Filter>头文件</Filter>
     </ClInclude>
     <ClInclude Include="CatalogManager.hpp">
       <Filter>头文件</Filter>
     </ClInclude>
-    <ClInclude Include="CatalogPage.hpp">
-      <Filter>头文件</Filter>
-    </ClInclude>
     <ClInclude Include="ConditionContent.hpp">
-      <Filter>头文件</Filter>
-    </ClInclude>
-    <ClInclude Include="Global.h">
-      <Filter>头文件</Filter>
-    </ClInclude>
-    <ClInclude Include="IndexCatalogPage.hpp">
-      <Filter>头文件</Filter>
-    </ClInclude>
-    <ClInclude Include="Page.hpp">
-      <Filter>头文件</Filter>
-    </ClInclude>
-    <ClInclude Include="RecordPage.hpp">
       <Filter>头文件</Filter>
     </ClInclude>
     <ClInclude Include="SQLcommand.hpp">
       <Filter>头文件</Filter>
     </ClInclude>
-    <ClInclude Include="Table.hpp">
-      <Filter>头文件</Filter>
-    </ClInclude>
-    <ClInclude Include="TableInfo.hpp">
-      <Filter>头文件</Filter>
-    </ClInclude>
-    <ClInclude Include="Tuple.hpp">
-      <Filter>头文件</Filter>
-    </ClInclude>
     <ClInclude Include="y.tab.h">
+      <Filter>头文件</Filter>
+    </ClInclude>
+    <ClInclude Include="RecordManager.hpp">
+      <Filter>头文件</Filter>
+    </ClInclude>
+    <ClInclude Include="Global.hpp">
+      <Filter>头文件</Filter>
+    </ClInclude>
+    <ClInclude Include="IndexManager.hpp">
       <Filter>头文件</Filter>
     </ClInclude>
   </ItemGroup>

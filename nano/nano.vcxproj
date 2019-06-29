@@ -133,43 +133,26 @@
   <ItemGroup>
     <ClCompile Include="API.cpp" />
     <ClCompile Include="Attribute.cpp" />
-    <ClCompile Include="BPTree.cpp" />
-    <ClCompile Include="BPTreeEntry.cpp" />
-    <ClCompile Include="BPTreeKey.cpp" />
-    <ClCompile Include="BPTreeNode.cpp" />
+    <ClCompile Include="IndexManager.cpp" />
     <ClCompile Include="BufferManager.cpp" />
     <ClCompile Include="CatalogManager.cpp" />
-    <ClCompile Include="CatalogPage.cpp" />
     <ClCompile Include="ConditionContent.cpp" />
-    <ClCompile Include="IndexCatalogPage.cpp" />
     <ClCompile Include="lex.yy.cpp" />
     <ClCompile Include="main.cpp" />
-    <ClCompile Include="RecordPage.cpp" />
     <ClCompile Include="SQLcommand.cpp" />
-    <ClCompile Include="Table.cpp" />
-    <ClCompile Include="TableInfo.cpp" />
-    <ClCompile Include="Tuple.cpp" />
+    <ClCompile Include="RecordManager.cpp" />
     <ClCompile Include="y.tab.c" />
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="API.hpp" />
     <ClInclude Include="Attribute.hpp" />
-    <ClInclude Include="BPTree.hpp" />
-    <ClInclude Include="BPTreeEntry.hpp" />
-    <ClInclude Include="BPTreeKey.hpp" />
-    <ClInclude Include="BPTreeNode.hpp" />
+    <ClInclude Include="IndexManager.hpp" />
     <ClInclude Include="BufferManager.hpp" />
     <ClInclude Include="CatalogManager.hpp" />
-    <ClInclude Include="CatalogPage.hpp" />
     <ClInclude Include="ConditionContent.hpp" />
-    <ClInclude Include="Global.h" />
-    <ClInclude Include="IndexCatalogPage.hpp" />
-    <ClInclude Include="Page.hpp" />
-    <ClInclude Include="RecordPage.hpp" />
+    <ClInclude Include="Global.hpp" />
     <ClInclude Include="SQLcommand.hpp" />
-    <ClInclude Include="Table.hpp" />
-    <ClInclude Include="TableInfo.hpp" />
-    <ClInclude Include="Tuple.hpp" />
+    <ClInclude Include="RecordManager.hpp" />
     <ClInclude Include="y.tab.h" />
   </ItemGroup>
   <ItemGroup>

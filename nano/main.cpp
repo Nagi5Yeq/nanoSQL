@@ -2,10 +2,8 @@
 #include <string>
 #include "BufferManager.hpp"
 #include "CatalogManager.hpp"
-#include "IndexCatalogPage.hpp"
-#include "TableInfo.hpp"
-#include "BPTree.hpp"
-#include "Table.hpp"
+#include "IndexManager.hpp"
+#include "RecordManager.hpp"
 #include "y.tab.h"
 extern int yyparse();
 
@@ -22,7 +20,7 @@ int main(int argc, const char * argv[]) {
 		indexPage.writeInitialPage();
 	}
 
-	cout << ">>> ";
+	cout << "nanoSQL> ";
 	while (1) {
 		yyparse();
 	}
